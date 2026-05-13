@@ -65,9 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentUser) {
             const roleText = currentUser.role === 'employer' ? 'Работодатель' : 'Соискатель';
             let html = `
-                <div class="user-info">
-                    <span class="username">${currentUser.name.split(' ')[0]}</span>
-                    <span class="user-role">(${roleText})</span>
+    <div class="user-info">
+        <button id="theme-toggle" class="theme-btn">🌙</button>
+        <span class="username">${currentUser.name.split(' ')[0]}</span>
             `;
 
             if (currentUser.role === 'employer') {
@@ -149,11 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!currentUser) loginModal.style.display = 'flex';
                 return;
             }
-            // Редактировать вакансию
-        if (e.target.classList.contains('edit-job-btn')) {
-            const jobId = parseInt(e.target.dataset.id);
-            editJob(jobId);
-        }
+        
             const jobId = parseInt(e.target.dataset.id);
             const job = jobs.find(j => j.id === jobId);
             if (job) {
@@ -182,6 +178,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const resume = JSON.parse(resumeData);
             alert(`Резюме кандидата: ${userName}\n\nДолжность: ${resume.position}\nГород: ${resume.city}\nОпыт: ${resume.experience} лет\n\nО себе:\n${resume.about}`);
+        }
+        if (e.target.classList.contains('contact-candidate-btn')) {
+            const userId = parseInt(e.target.dataset.userId);
+            const userName = e.target.dataset.userName;
+
+            let app = applications.find(a => 
+                a.applicantId === userId && 
+                jobs.some(j => j.id === a.jobId && j.employerId === currentUser.id)
+            );
+
+            if (!app) {
+                app = {
+                    id: Date.now(),
+                    jobId: null,
+                    jobTitle: 'Прямое сообщение',
+                    applicantId: userId,
+                    applicantName: userName,
+                    messages: []
+                };
+                applications.unshift(app);
+                localStorage.setItem('applications', JSON.stringify(applications));
+            }
+
+            resumeModal.style.display = 'none';
+            openChat(app.id);
         }
     });
 
@@ -230,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ====================== МОИ ВАКАНСИИ ======================
     function showMyJobs() {
-        if (!currentUser?.role === 'employer') return;
+        if (currentUser?.role !== 'employer') return;
 
         const container = document.getElementById('my-jobs-list');
         container.innerHTML = '';
@@ -458,13 +479,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const jobData = {
-            title: document.getElementById('job-title').value.trim(),
-            company: document.getElementById('job-company').value.trim(),
-            salary: parseInt(document.getElementById('job-salary').value),
-            city: document.getElementById('job-city').value.trim(),
-            experience: document.getElementById('job-experience').value.trim(),
-            employerId: currentUser.id,
-        };
+    title: document.getElementById('job-title').value.trim(),
+    company: document.getElementById('job-company').value.trim(),
+    salary: parseInt(document.getElementById('job-salary').value),
+    city: document.getElementById('job-city').value.trim(),
+    experience: document.getElementById('job-experience').value.trim(),
+    description: document.getElementById('job-description').value.trim(),
+    employerId: currentUser.id,
+};
 
         if (editingJobId) {
             // Редактирование
@@ -693,9 +715,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     </button>` : ''}
                 </div>
 
-                <button class="open-chat-btn" data-user-id="${user.id}" data-user-name="${user.name}" style="margin-top:12px;">
-                    Связаться
-                </button>
+                <button class="contact-candidate-btn" data-user-id="${user.id}" data-user-name="${user.name}" style="margin-top:12px;">
+    Связаться
+</button>
             `;
             listContainer.appendChild(div);
         });
