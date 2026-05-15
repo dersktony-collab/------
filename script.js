@@ -445,13 +445,15 @@ document.addEventListener('DOMContentLoaded', () => {
         filteredJobs.forEach(job => {
             const card = document.createElement('div');
             card.className = 'job-card';
-            card.innerHTML = `
-                <h3>${job.title}</h3>
-                <p><strong>${job.company}</strong></p>
-                <p class="salary">${job.salary.toLocaleString('ru-RU')} ₽</p>
-                <p>${job.city} • ${job.experience}</p>
-                <button class="respond-btn" data-id="${job.id}">Откликнуться</button>
-            `;
+           card.innerHTML = `
+    <h3>${job.title}</h3>
+    <p><strong>${job.company}</strong></p>
+    <p class="salary">${job.salary.toLocaleString('ru-RU')} ₽</p>
+    <p>${job.city} • ${job.experience}</p>
+    ${job.remote ? `<p>📍 ${job.remote} • ⏱ ${job.hours || '—'} ч/день • 📅 ${job.schedule || '—'}</p>` : ''}
+    ${job.type ? `<p>💼 ${job.type}</p>` : ''}
+    <button class="respond-btn" data-id="${job.id}">Откликнуться</button>
+`;
             container.appendChild(card);
         });
     }
@@ -485,6 +487,10 @@ document.addEventListener('DOMContentLoaded', () => {
     city: document.getElementById('job-city').value.trim(),
     experience: document.getElementById('job-experience').value.trim(),
     description: document.getElementById('job-description').value.trim(),
+        type: document.getElementById('job-type').value,       
+    remote: document.getElementById('job-remote').value,  
+    hours: document.getElementById('job-hours').value,      
+    schedule: document.getElementById('job-schedule').value, 
     employerId: currentUser.id,
 };
 

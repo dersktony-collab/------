@@ -198,6 +198,42 @@
                 <label>Опыт работы</label>
                 <input type="text" id="job-experience" placeholder="1-3 года / Без опыта" required>
             </div>
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div class="form-group">
+        <label>Тип занятости</label>
+        <select id="job-type">
+            <option value="Полная занятость">Полная занятость</option>
+            <option value="Частичная занятость">Частичная занятость</option>
+            <option value="Стажировка">Стажировка</option>
+            <option value="Проектная работа">Проектная работа</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Формат работы</label>
+        <select id="job-remote">
+            <option value="Офис">Офис</option>
+            <option value="Удалённо">Удалённо</option>
+            <option value="Гибрид">Гибрид</option>
+        </select>
+    </div>
+</div>
+
+<div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div class="form-group">
+        <label>Часов в день</label>
+        <input type="number" id="job-hours" placeholder="8" min="1" max="24" required>
+    </div>
+    <div class="form-group">
+        <label>График</label>
+        <select id="job-schedule">
+            <option value="5/2">5/2 (Пн-Пт)</option>
+            <option value="2/2">2/2</option>
+            <option value="6/1">6/1</option>
+            <option value="Гибкий">Гибкий график</option>
+            <option value="Сменный">Сменный график</option>
+        </select>
+    </div>
+</div>
 
             <div class="form-group">
                 <label>Описание вакансии</label>
