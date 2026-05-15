@@ -6,19 +6,19 @@
     <title>WorkFlow — Работа в удовольствие</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <!-- Firebase SDK (Compat version - проще для твоего проекта) -->
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
+
     <!-- HEADER -->
     <header class="header">
         <div class="container">
-            <div class="logo">WorkFlow</div>
+            <div class="logo">Work<span>Flow</span></div>
             
-         <nav class="nav">
-                <a href="#" class="nav-link">Вакансии</a>
+            <nav class="nav">
+                <a href="#" class="nav-link active">Вакансии</a>
                 <a href="#" id="nav-resume" class="nav-link">Резюме</a>
             </nav>
 
@@ -32,299 +32,408 @@
             </div>
         </div>
     </header>
-   <!-- МОДАЛЬНОЕ ОКНО ВХОДА -->
-<div id="login-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal">&times;</span>
-        <h2>Вход в аккаунт</h2>
-        
-        <form id="login-form">
-            <div class="form-group">
-                <label>Электронная почта или телефон</label>
-                <input type="text" id="login-email" placeholder="example@mail.ru" required>
-            </div>
-            
-            <div class="form-group">
-                <label>Пароль</label>
-                <input type="password" id="login-password" placeholder="••••••••" required>
-            </div>
 
-            <label class="remember-me">
-                <input type="checkbox" id="remember-me" checked>
-                Запомнить меня
-            </label>
-            
-            <button type="submit" class="login-submit-btn">Войти</button>
-        </form>
-        
-        <div class="modal-footer">
-            <p>Нет аккаунта? <a href="#" id="register-link">Зарегистрироваться</a></p>
-            <a href="#" class="forgot-password">Забыли пароль?</a>
-        </div>
-    </div>
-</div>
-
-    <!-- HERO + SEARCH -->
-<section class="hero">
-    <div class="container">
-        <h1>Найди работу своей мечты!</h1>
-        <div class="search-bar">
-            <input type="text" id="search-input" placeholder="Введите желаемую вакансию">
-            
-            <!-- Блок города -->
-            <div class="city-wrapper">
-                <select id="city-select">
-                    <option value="">Выберете город</option>
-                    <option value="Москва">Москва</option>
-                    <option value="Санкт-Петербург">Санкт-Петербург</option>
-                    <option value="Новосибирск">Новосибирск</option>
-                    <option value="Екатеринбург">Екатеринбург</option>
-                    <option value="Казань">Казань</option>
-                    <option value="Нижний Новгород">Нижний Новгород</option>
-                    <option value="Челябинск">Челябинск</option>
-                    <option value="Самара">Самара</option>
-                    <option value="Ростов-на-Дону">Ростов-на-Дону</option>
-                    <option value="Уфа">Уфа</option>
-                    <option value="Красноярск">Красноярск</option>
-                    <option value="Пермь">Пермь</option>
-                    <option value="Воронеж">Воронеж</option>
-                    <option value="Краснодар">Краснодар</option>
-                    <option value="Удалённо">Удалённо</option>
-                </select>
-            </div>
-
-            <button id="search-btn">Найти</button>
-        </div>
-    </div>
-</section>
-
-<!-- VACANCIES -->
-<section class="jobs-section">
-    <div class="container">
-        <h2>Популярные вакансии</h2>
-        
-        <!-- Фильтры -->
-        <div class="filters">
-            <!-- Фильтр по зарплате -->
-            <div class="salary-filter-box">
-                <label>Зарплата от, ₽</label>
-                <div class="salary-inputs">
-                    <input type="number" id="salary-input" placeholder="0" min="0" step="5000">
-                    <input type="range" id="salary-slider" min="0" max="300000" step="5000" value="0">
-                </div>
-                <div id="salary-value" class="salary-value">0 ₽</div>
-            </div>
-        </div>
-
-        <div class="jobs-grid" id="jobs-grid"></div>
-    </div>
-</section>
-
-    
-    <!-- МОДАЛЬНОЕ ОКНО РЕГИСТРАЦИИ -->
-<div id="register-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-register">&times;</span>
-        <h2>Создать аккаунт</h2>
-        
-        <form id="register-form">
-            <div class="form-group">
-                <label>Имя и Фамилия</label>
-                <input type="text" id="reg-name" placeholder="Иван Иванов" required>
-            </div>
-            
-            <div class="form-group">
-                <label>Электронная почта</label>
-                <input type="email" id="reg-email" placeholder="example@mail.ru" required>
-            </div>
-            
-            <div class="form-group">
-                <label>Телефон</label>
-                <input type="tel" id="reg-phone" placeholder="+7 (___) ___-__-__" required>
-            </div>
-            
-            <div class="form-group">
-                <label>Пароль</label>
-                <input type="password" id="reg-password" placeholder="Минимум 6 символов" required>
-            </div>
-            
-            <div class="form-group">
-                <label>Подтвердите пароль</label>
-                <input type="password" id="reg-password-confirm" placeholder="Повторите пароль" required>
-            </div>
-            
-            <div class="role-select">
-                <label>Я хочу:</label>
-                <select id="reg-role">
-                    <option value="candidate">Искать работу (Соискатель)</option>
-                    <option value="employer">Размещать вакансии (Работодатель)</option>
-                </select>
-            </div>
-            
-            <button type="submit" class="register-submit-btn">Зарегистрироваться</button>
-        </form>
-        
-        <div class="modal-footer">
-            <p>Уже есть аккаунт? <a href="#" id="login-link">Войти</a></p>
-        </div>
-    </div>
-</div>
-
-<!-- МОДАЛЬНОЕ ОКНО РАЗМЕЩЕНИЯ ВАКАНСИИ -->
-<div id="post-job-modal" class="modal">
-    <div class="modal-content" style="max-width: 750px; width: 95%;">
-        <span class="close-post-job">&times;</span>
-        <h2>Разместить новую вакансию</h2>
-        
-        <form id="post-job-form">
-            <div class="form-group">
-                <label>Название вакансии</label>
-                <input type="text" id="job-title" placeholder="Например: Senior Frontend Developer (React)" required>
-            </div>
-
-            <div class="form-group">
-                <label>Компания</label>
-                <input type="text" id="job-company" placeholder="Название компании" required>
-            </div>
-
-            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <!-- LOGIN MODAL -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Вход в аккаунт</h2>
+            <form id="login-form">
                 <div class="form-group">
-                    <label>Зарплата (от, ₽)</label>
-                    <input type="number" id="job-salary" placeholder="150000" min="10000" required>
+                    <label>Электронная почта</label>
+                    <input type="text" id="login-email" placeholder="example@mail.ru" required>
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <label class="remember-me">
+                    <input type="checkbox" id="remember-me" checked>
+                    Запомнить меня
+                </label>
+                <button type="submit" class="login-submit-btn">Войти</button>
+            </form>
+            <div class="modal-footer">
+                <p>Нет аккаунта? <a href="#" id="register-link">Зарегистрироваться</a></p>
+                <a href="#" class="forgot-password">Забыли пароль?</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-left">
+                <h1>Найди работу<br><span class="accent">своей мечты!</span></h1>
+                <p>Тысячи актуальных вакансий от проверенных<br>компаний уже ждут вас</p>
+                <div class="search-bar">
+                    <div class="search-bar-inner">
+                        <i class="fas fa-search search-icon-inner"></i>
+                        <input type="text" id="search-input" placeholder="Введите желаемую вакансию">
+                    </div>
+                    <div class="city-wrapper">
+                        <i class="fas fa-map-marker-alt city-icon"></i>
+                        <select id="city-select">
+                            <option value="">Выберите город</option>
+                            <option value="Москва">Москва</option>
+                            <option value="Санкт-Петербург">Санкт-Петербург</option>
+                            <option value="Новосибирск">Новосибирск</option>
+                            <option value="Екатеринбург">Екатеринбург</option>
+                            <option value="Казань">Калининград
+                            <option value="Нижний Новгород">Нижний Новгород</option>
+                            <option value="Челябинск">Челябинск</option>
+                            <option value="Самара">Самара</option>
+                            <option value="Ростов-на-Дону">Ростов-на-Дону</option>
+                            <option value="Уфа">Уфа</option>
+                            <option value="Красноярск">Красноярск</option>
+                            <option value="Пермь">Пермь</option>
+                            <option value="Воронеж">Воронеж</option>
+                            <option value="Краснодар">Краснодар</option>
+                            <option value="Удалённо">Удалённо</option>
+                        </select>
+                    </div>
+                    <button id="search-btn">Найти</button>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="hero-illustration">
+                    <!-- Floating doc card -->
+                    <div class="hero-doc">
+                        <div class="doc-icon">📄</div>
+                        <div class="doc-lines">
+                            <div class="doc-line"></div>
+                            <div class="doc-line"></div>
+                            <div class="doc-line"></div>
+                        </div>
+                    </div>
+                    <!-- Search float card -->
+                    <div class="hero-search-float">
+                        <div class="search-icon">🔍</div>
+                        <div class="search-text">
+                            <span class="search-title">1 245 вакансий</span>
+                            <span class="search-sub">в разработке</span>
+                        </div>
+                    </div>
+                    <!-- Stats float -->
+                    <div class="hero-stats-float">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">компаний на платформе</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="categories-section">
+        <div class="container">
+            <div class="categories-grid">
+                <a href="#" class="category-card" data-cat="Разработка">
+                    <div class="category-icon"><i class="fas fa-code"></i></div>
+                    <div>
+                        <div class="category-name">Разработка</div>
+                        <div class="category-count">1 245 вакансий</div>
+                    </div>
+                </a>
+                <a href="#" class="category-card" data-cat="Маркетинг">
+                    <div class="category-icon"><i class="fas fa-bullhorn"></i></div>
+                    <div>
+                        <div class="category-name">Маркетинг</div>
+                        <div class="category-count">0 вакансий</div>
+                    </div>
+                </a>
+                <a href="#" class="category-card" data-cat="Дизайн">
+                    <div class="category-icon"><i class="fas fa-pen-nib"></i></div>
+                    <div>
+                        <div class="category-name">Дизайн</div>
+                        <div class="category-count">0 вакансий</div>
+                    </div>
+                </a>
+                <a href="#" class="category-card" data-cat="Продажи">
+                    <div class="category-icon"><i class="fas fa-chart-bar"></i></div>
+                    <div>
+                        <div class="category-name">Продажи</div>
+                        <div class="category-count">0 вакансий</div>
+                    </div>
+                </a>
+                <a href="#" class="category-card" data-cat="Поддержка">
+                    <div class="category-icon"><i class="fas fa-headset"></i></div>
+                    <div>
+                        <div class="category-name">Поддержка</div>
+                        <div class="category-count">0 вакансии</div>
+                    </div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon"><i class="fas fa-th"></i></div>
+                    <div>
+                        <div class="category-name">Все категории</div>
+                        <div class="category-count">Смотреть все</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- VACANCIES -->
+    <section class="jobs-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Популярные вакансии</h2>
+                <a href="#" class="see-all-link">Смотреть все →</a>
+            </div>
+            
+            <!-- Salary filter -->
+            <div class="filters">
+                <div class="salary-filter-box">
+                    <label>Зарплата от, ₽</label>
+                    <div class="salary-inputs">
+                        <input type="number" id="salary-input" placeholder="0" min="0" step="5000">
+                        <input type="range" id="salary-slider" min="0" max="300000" step="5000" value="0">
+                    </div>
+                    <div id="salary-value" class="salary-value">0 ₽</div>
+                </div>
+            </div>
+
+            <div class="jobs-grid" id="jobs-grid"></div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon-wrap"><i class="fas fa-shield-alt"></i></div>
+                    <div>
+                        <h4>Проверенные компании</h4>
+                        <p>Мы проверяем всех работодателей перед публикацией вакансий</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-wrap"><i class="fas fa-clock"></i></div>
+                    <div>
+                        <h4>Актуальные вакансии</h4>
+                        <p>Ежедневное обновление базы актуальных вакансий</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-wrap"><i class="fas fa-bell"></i></div>
+                    <div>
+                        <h4>Уведомления</h4>
+                        <p>Получайте уведомления о новых вакансиях по вашим критериям</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-wrap"><i class="fas fa-user-circle"></i></div>
+                    <div>
+                        <h4>Профиль</h4>
+                        <p>Создайте профиль и получайте персональные рекомендации</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REGISTER MODAL -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-register">&times;</span>
+            <h2>Создать аккаунт</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label>Имя и Фамилия</label>
+                    <input type="text" id="reg-name" placeholder="Иван Иванов" required>
+                </div>
+                <div class="form-group">
+                    <label>Электронная почта</label>
+                    <input type="email" id="reg-email" placeholder="example@mail.ru" required>
+                </div>
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="tel" id="reg-phone" placeholder="+7 (___) ___-__-__" required>
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" id="reg-password" placeholder="Минимум 6 символов" required>
+                </div>
+                <div class="form-group">
+                    <label>Подтвердите пароль</label>
+                    <input type="password" id="reg-password-confirm" placeholder="Повторите пароль" required>
+                </div>
+                <div class="role-select">
+                    <label style="display:block;margin-bottom:6px;font-weight:700;font-size:12px;color:#6b7394;text-transform:uppercase;letter-spacing:0.6px;">Я хочу</label>
+                    <select id="reg-role">
+                        <option value="candidate">Искать работу (Соискатель)</option>
+                        <option value="employer">Размещать вакансии (Работодатель)</option>
+                    </select>
+                </div>
+                <button type="submit" class="register-submit-btn">Зарегистрироваться</button>
+            </form>
+            <div class="modal-footer">
+                <p>Уже есть аккаунт? <a href="#" id="login-link">Войти</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- POST JOB MODAL -->
+    <div id="post-job-modal" class="modal">
+        <div class="modal-content" style="max-width: 750px; width: 95%;">
+            <span class="close-post-job">&times;</span>
+            <h2>Разместить новую вакансию</h2>
+            <form id="post-job-form">
+                <div class="form-group">
+                    <label>Название вакансии</label>
+                    <input type="text" id="job-title" placeholder="Например: Senior Frontend Developer (React)" required>
+                </div>
+                <div class="form-group">
+                    <label>Компания</label>
+                    <input type="text" id="job-company" placeholder="Название компании" required>
+                </div>
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label>Зарплата (от, ₽)</label>
+                        <input type="number" id="job-salary" placeholder="150000" min="10000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Город</label>
+                        <input type="text" id="job-city" placeholder="Москва / Удалённо" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Опыт работы</label>
+                    <input type="text" id="job-experience" placeholder="1-3 года / Без опыта" required>
+                </div>
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                    <div class="form-group">
+                        <label>Тип занятости</label>
+                        <div class="button-group" id="job-type-group">
+                            <button type="button" class="type-btn active" data-value="Полная занятость">Полная</button>
+                            <button type="button" class="type-btn" data-value="Частичная занятость">Частичная</button>
+                            <button type="button" class="type-btn" data-value="Стажировка">Стажировка</button>
+                            <button type="button" class="type-btn" data-value="Проектная работа">Проектная</button>
+                        </div>
+                        <input type="hidden" id="job-type" value="Полная занятость">
+                    </div>
+                    <div class="form-group">
+                        <label>Формат работы</label>
+                        <div class="button-group" id="job-remote-group">
+                            <button type="button" class="type-btn active" data-value="Офис">Офис</button>
+                            <button type="button" class="type-btn" data-value="Удалённо">Удалённо</button>
+                            <button type="button" class="type-btn" data-value="Гибрид">Гибрид</button>
+                        </div>
+                        <input type="hidden" id="job-remote" value="Офис">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>График</label>
+                    <div class="button-group" id="job-schedule-group" style="flex-wrap: wrap;">
+                        <button type="button" class="type-btn active" data-value="5/2">5/2 (Пн-Пт)</button>
+                        <button type="button" class="type-btn" data-value="2/2">2/2</button>
+                        <button type="button" class="type-btn" data-value="6/1">6/1</button>
+                        <button type="button" class="type-btn" data-value="Гибкий">Гибкий</button>
+                        <button type="button" class="type-btn" data-value="Сменный">Сменный</button>
+                    </div>
+                    <input type="hidden" id="job-schedule" value="5/2">
+                </div>
+                <div class="form-group">
+                    <label>Описание вакансии</label>
+                    <textarea id="job-description" rows="8" placeholder="Опишите обязанности, требования, условия работы..." required></textarea>
+                </div>
+                <button type="submit" class="register-submit-btn">Опубликовать вакансию</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- RESPOND MODAL -->
+    <div id="respond-modal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-respond">&times;</span>
+            <h2>Откликнуться на вакансию</h2>
+            <p id="respond-job-title" style="font-weight:600; margin:10px 0; color: var(--primary);"></p>
+            <form id="respond-form">
+                <div class="form-group">
+                    <label>Сопроводительное письмо (по желанию)</label>
+                    <textarea id="cover-letter" rows="6" placeholder="Здравствуйте! Меня заинтересовала ваша вакансия..."></textarea>
+                </div>
+                <button type="submit" class="register-submit-btn">Отправить отклик</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- APPLICATIONS MODAL -->
+    <div id="applications-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px; width: 90%;">
+            <span class="close-applications">&times;</span>
+            <h2>Отклики на мои вакансии</h2>
+            <div id="applications-list" class="applications-list"></div>
+        </div>
+    </div>
+
+    <!-- CHAT MODAL -->
+    <div id="chat-modal" class="modal">
+        <div class="modal-content" style="max-width: 720px; width: 95%;">
+            <span class="close-chat">&times;</span>
+            <h2 id="chat-job-title">Чат по вакансии</h2>
+            <p id="chat-with" style="margin-bottom: 15px; color: var(--gray-400);"></p>
+            <div id="chat-messages" class="chat-messages"></div>
+            <div class="chat-input-area" style="display: flex; gap: 10px;">
+                <textarea id="chat-input" rows="3" placeholder="Напишите сообщение..." style="flex: 1; resize: none; padding: 12px; border: 1.5px solid var(--gray-200); border-radius: 8px; font-family: inherit; outline: none; background: var(--white); color: var(--text);"></textarea>
+                <button id="chat-send-btn">Отправить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MY JOBS MODAL -->
+    <div id="my-jobs-modal" class="modal">
+        <div class="modal-content" style="max-width: 900px; width: 95%;">
+            <span class="close-my-jobs">&times;</span>
+            <h2>Мои вакансии</h2>
+            <div id="my-jobs-list" class="applications-list"></div>
+        </div>
+    </div>
+
+    <!-- RESUME MODAL -->
+    <div id="resume-modal" class="modal">
+        <div class="modal-content" style="max-width: 680px;">
+            <span class="close-resume">&times;</span>
+            <h2>Моё резюме</h2>
+            <form id="resume-form">
+                <div class="form-group">
+                    <label>Желаемая должность</label>
+                    <input type="text" id="resume-position" placeholder="Например: Frontend-разработчик" required>
                 </div>
                 <div class="form-group">
                     <label>Город</label>
-                    <input type="text" id="job-city" placeholder="Москва / Удалённо" required>
+                    <input type="text" id="resume-city" placeholder="Москва или Удалённо" required>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label>Опыт работы</label>
-                <input type="text" id="job-experience" placeholder="1-3 года / Без опыта" required>
-            </div>
-        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-    
-    <!-- Тип занятости -->
-    <div class="form-group">
-        <label>Тип занятости</label>
-        <div class="button-group" id="job-type-group">
-            <button type="button" class="type-btn active" data-value="Полная занятость">Полная</button>
-            <button type="button" class="type-btn" data-value="Частичная занятость">Частичная</button>
-            <button type="button" class="type-btn" data-value="Стажировка">Стажировка</button>
-            <button type="button" class="type-btn" data-value="Проектная работа">Проектная</button>
-        </div>
-        <input type="hidden" id="job-type" value="Полная занятость">
-    </div>
-
-    <!-- Формат работы -->
-    <div class="form-group">
-        <label>Формат работы</label>
-        <div class="button-group" id="job-remote-group">
-            <button type="button" class="type-btn active" data-value="Офис">Офис</button>
-            <button type="button" class="type-btn" data-value="Удалённо">Удалённо</button>
-            <button type="button" class="type-btn" data-value="Гибрид">Гибрид</button>
-        </div>
-        <input type="hidden" id="job-remote" value="Офис">
-    </div>
-</div>
-
-<!-- График работы - отдельно, т.к. вариантов много -->
-<div class="form-group">
-    <label>График</label>
-    <div class="button-group" id="job-schedule-group" style="flex-wrap: wrap;">
-        <button type="button" class="type-btn active" data-value="5/2">5/2 (Пн-Пт)</button>
-        <button type="button" class="type-btn" data-value="2/2">2/2</button>
-        <button type="button" class="type-btn" data-value="6/1">6/1</button>
-        <button type="button" class="type-btn" data-value="Гибкий">Гибкий</button>
-        <button type="button" class="type-btn" data-value="Сменный">Сменный</button>
-    </div>
-    <input type="hidden" id="job-schedule" value="5/2">
-</div>
-
-            <div class="form-group">
-                <label>Описание вакансии</label>
-                <textarea id="job-description" rows="8" placeholder="Опишите обязанности, требования, условия работы, что предлагаете кандидату..." required></textarea>
-            </div>
-
-            <button type="submit" class="register-submit-btn">Опубликовать вакансию</button>
-        </form>
-    </div>
-</div>
-<!-- МОДАЛЬНОЕ ОКНО ОТКЛИКА -->
-<div id="respond-modal" class="modal">
-    <div class="modal-content" style="max-width: 500px;">
-        <span class="close-respond">&times;</span>
-        <h2>Откликнуться на вакансию</h2>
-        <p id="respond-job-title" style="font-weight:600; margin:10px 0;"></p>
-        
-        <form id="respond-form">
-            <div class="form-group">
-                <label>Сопроводительное письмо (по желанию)</label>
-                <textarea id="cover-letter" rows="6" placeholder="Здравствуйте! Меня заинтересовала ваша вакансия..."></textarea>
-            </div>
-            <button type="submit" class="register-submit-btn">Отправить отклик</button>
-        </form>
-    </div>
-</div>
-<!-- МОДАЛЬНОЕ ОКНО "МОИ ОТКЛИКИ" (для работодателя) -->
-<div id="applications-modal" class="modal">
-    <div class="modal-content" style="max-width: 800px; width: 90%;">
-        <span class="close-applications">&times;</span>
-        <h2>Отклики на мои вакансии</h2>
-        <div id="applications-list" class="applications-list"></div>
-    </div>
-</div>
-<!-- МОДАЛЬНОЕ ОКНО ЧАТА -->
-<div id="chat-modal" class="modal">
-    <div class="modal-content" style="max-width: 720px; width: 95%;">
-        <span class="close-chat">&times;</span>
-        <h2 id="chat-job-title">Чат по вакансии</h2>
-        <p id="chat-with" style="margin-bottom: 15px; color: #666;"></p>
-        
-        <div id="chat-messages" class="chat-messages" style="height: 400px; overflow-y: auto; padding: 15px; background: #f8f9fa; border-radius: 12px; margin-bottom: 15px;"></div>
-        
-        <div class="chat-input-area" style="display: flex; gap: 10px;">
-            <textarea id="chat-input" rows="3" placeholder="Напишите сообщение..." style="flex: 1; resize: none; padding: 12px;"></textarea>
-            <button id="chat-send-btn" style="padding: 0 25px;">Отправить</button>
+                <div class="form-group">
+                    <label>Опыт работы (лет)</label>
+                    <input type="number" id="resume-experience" min="0" value="0" required>
+                </div>
+                <div class="form-group">
+                    <label>О себе</label>
+                    <textarea id="resume-about" rows="6" placeholder="Расскажите о своём опыте, навыках, достижениях..." required></textarea>
+                </div>
+                <button type="submit" class="register-submit-btn">Сохранить резюме</button>
+            </form>
         </div>
     </div>
-</div>
-<!-- МОДАЛЬНОЕ ОКНО "МОИ ВАКАНСИИ" -->
-<div id="my-jobs-modal" class="modal">
-    <div class="modal-content" style="max-width: 900px; width: 95%;">
-        <span class="close-my-jobs">&times;</span>
-        <h2>Мои вакансии</h2>
-        <div id="my-jobs-list" class="applications-list"></div>
-    </div>
-</div>
-<!-- МОДАЛЬНОЕ ОКНО РЕЗЮМЕ -->
-<div id="resume-modal" class="modal">
-    <div class="modal-content" style="max-width: 680px;">
-        <span class="close-resume">&times;</span>
-        <h2>Моё резюме</h2>
-        
-        <form id="resume-form">
-            <div class="form-group">
-                <label>Желаемая должность</label>
-                <input type="text" id="resume-position" placeholder="Например: Frontend-разработчик" required>
-            </div>
-            <div class="form-group">
-                <label>Город</label>
-                <input type="text" id="resume-city" placeholder="Москва или Удалённо" required>
-            </div>
-            <div class="form-group">
-                <label>Опыт работы (лет)</label>
-                <input type="number" id="resume-experience" min="0" value="0" required>
-            </div>
-            <div class="form-group">
-                <label>О себе</label>
-                <textarea id="resume-about" rows="6" placeholder="Расскажите о своём опыте, навыках, достижениях и почему вы подходите на эту должность..." required></textarea>
-            </div>
-            <button type="submit" class="register-submit-btn">Сохранить резюме</button>
- </form>
-    </div>
-</div>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Category filter click
+        document.querySelectorAll('.category-card[data-cat]').forEach(card => {
+            card.addEventListener('click', e => {
+                e.preventDefault();
+                const cat = card.dataset.cat;
+                const searchInput = document.getElementById('search-input');
+                if (searchInput) {
+                    searchInput.value = cat;
+                    searchInput.dispatchEvent(new Event('input'));
+                }
+                document.querySelector('.jobs-section')?.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
 </body>
 </html>

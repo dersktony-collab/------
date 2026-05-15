@@ -1,23 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+:root {
+    --primary: #3d3db4;
+    --primary-light: #5b5be6;
+    --primary-dark: #2c2c8a;
+    --accent: #f5a623;
+    --white: #ffffff;
+    --gray-50: #f8f9fc;
+    --gray-100: #f0f2f8;
+    --gray-200: #e4e7f0;
+    --gray-400: #9ca3bc;
+    --gray-600: #6b7394;
+    --gray-800: #2d3256;
+    --text: #1a1d3a;
+    --shadow-sm: 0 1px 3px rgba(61,61,180,0.08);
+    --shadow-md: 0 4px 16px rgba(61,61,180,0.10);
+    --shadow-lg: 0 8px 32px rgba(61,61,180,0.13);
+    --radius: 12px;
+    --radius-sm: 8px;
+}
+
 body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: 'Golos Text', 'Segoe UI', sans-serif;
+    background: var(--gray-50);
+    color: var(--text);
     line-height: 1.6;
-    background: #f4f6f9;
-    color: #1a1a2e;
-    transition: 0.3s;
+    transition: background 0.3s, color 0.3s;
 }
 
 body.dark {
-    background: #0d0d14;
-    color: #e0e0e0;
+    --gray-50: #0f1020;
+    --gray-100: #161829;
+    --gray-200: #1e2038;
+    --gray-400: #5a6080;
+    --gray-600: #8890b0;
+    --gray-800: #c0c8e8;
+    --text: #e8ecff;
+    --white: #13152a;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.3);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
 }
 
-/* ==================== ЛЕЙАУТ ==================== */
+/* ==================== LAYOUT ==================== */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -26,66 +57,69 @@ body.dark {
 
 /* ==================== HEADER ==================== */
 .header {
-    background: #ffffff;
-    border-bottom: 2px solid #e8eaf0;
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
     position: sticky;
     top: 0;
     z-index: 100;
-}
-
-body.dark .header {
-    background: #12121a;
-    border-bottom: 2px solid #1e1e2e;
+    box-shadow: var(--shadow-sm);
 }
 
 .header .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 24px;
+    padding: 14px 24px;
+    gap: 16px;
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: 800;
+    font-size: 22px;
+    font-weight: 900;
     letter-spacing: -0.5px;
-    background: linear-gradient(90deg, #4e54c8, #8f94fb);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--primary);
+    flex-shrink: 0;
 }
 
-/* Навигация */
+.logo span {
+    color: var(--primary-light);
+}
+
+/* Nav */
 .nav {
     display: flex;
-    gap: 4px;
+    gap: 2px;
 }
 
 .nav-link {
-    color: #555;
+    color: var(--gray-600);
     text-decoration: none;
     font-weight: 500;
     font-size: 15px;
     padding: 8px 16px;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     transition: all 0.2s;
-    letter-spacing: 0.2px;
+    position: relative;
 }
 
-body.dark .nav-link {
-    color: #aaa;
+.nav-link:hover, .nav-link.active {
+    color: var(--primary);
+    background: rgba(61,61,180,0.06);
 }
 
-.nav-link:hover {
-    background: #f0f1ff;
-    color: #4e54c8;
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 2px;
+    background: var(--primary);
+    border-radius: 2px;
 }
 
-body.dark .nav-link:hover {
-    background: #1e1e2e;
-    color: #8f94fb;
-}
-
-/* ==================== ПРАВАЯ ЧАСТЬ ШАПКИ ==================== */
+/* Header right */
 .header-right {
     display: flex;
     align-items: center;
@@ -102,27 +136,18 @@ body.dark .nav-link:hover {
 
 .username {
     font-weight: 600;
-    color: #4e54c8;
+    color: var(--primary);
     font-size: 14px;
 }
 
-.user-role {
-    color: #999;
-    font-size: 13px;
-}
-
-body.dark .user-role {
-    color: #666;
-}
-
-/* ==================== КНОПКИ ==================== */
+/* Buttons */
 .theme-btn {
-    width: 36px;
-    height: 36px;
-    background: #f4f6f9;
-    border: 1px solid #e8eaf0;
-    border-radius: 6px;
-    font-size: 16px;
+    width: 38px;
+    height: 38px;
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    font-size: 17px;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
@@ -130,49 +155,30 @@ body.dark .user-role {
     justify-content: center;
 }
 
-body.dark .theme-btn {
-    background: #1e1e2e;
-    border-color: #2a2a3e;
-}
-
-.theme-btn:hover {
-    border-color: #4e54c8;
-}
+.theme-btn:hover { border-color: var(--primary); background: rgba(61,61,180,0.06); }
 
 .login-btn {
-    padding: 8px 16px;
+    padding: 9px 20px;
     background: transparent;
-    color: #4e54c8;
-    border: 1.5px solid #4e54c8;
-    border-radius: 6px;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+    border-radius: var(--radius-sm);
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
     transition: all 0.2s;
     white-space: nowrap;
+    font-family: inherit;
 }
 
-.login-btn:hover {
-    background: #4e54c8;
-    color: white;
-}
-
-body.dark .login-btn {
-    color: #8f94fb;
-    border-color: #8f94fb;
-}
-
-body.dark .login-btn:hover {
-    background: #8f94fb;
-    color: #0d0d14;
-}
+.login-btn:hover { background: var(--primary); color: white; }
 
 .post-job-btn {
-    padding: 8px 16px;
-    background: #4e54c8;
+    padding: 9px 20px;
+    background: var(--primary);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
@@ -181,180 +187,431 @@ body.dark .login-btn:hover {
     display: flex;
     align-items: center;
     gap: 6px;
+    font-family: inherit;
 }
 
-.post-job-btn:hover {
-    background: #3b40a8;
-}
+.post-job-btn:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: var(--shadow-md); }
 
 .applications-btn {
-    padding: 8px 14px;
-    background: #f0f1ff;
-    color: #4e54c8;
-    border: 1.5px solid #d0d3f5;
-    border-radius: 6px;
+    padding: 9px 16px;
+    background: rgba(61,61,180,0.07);
+    color: var(--primary);
+    border: 1px solid rgba(61,61,180,0.2);
+    border-radius: var(--radius-sm);
     font-weight: 600;
     font-size: 13.5px;
     cursor: pointer;
     transition: all 0.2s;
     white-space: nowrap;
+    font-family: inherit;
 }
 
-.applications-btn:hover {
-    background: #4e54c8;
-    color: white;
-    border-color: #4e54c8;
-}
-
-body.dark .applications-btn {
-    background: #1e1e2e;
-    border-color: #2a2a3e;
-    color: #8f94fb;
-}
+.applications-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
 
 .logout-btn {
-    padding: 8px 14px;
+    padding: 9px 16px;
     background: transparent;
     color: #e63946;
     border: 1.5px solid #e63946;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-weight: 600;
     font-size: 13.5px;
     cursor: pointer;
     transition: all 0.2s;
     white-space: nowrap;
+    font-family: inherit;
 }
 
-.logout-btn:hover {
-    background: #e63946;
-    color: white;
-}
+.logout-btn:hover { background: #e63946; color: white; }
 
 /* ==================== HERO ==================== */
 .hero {
-    background: linear-gradient(135deg, #4e54c8 0%, #3b40a8 100%);
+    background: linear-gradient(135deg, #3d3db4 0%, #4a4ad4 40%, #5b5be6 70%, #6e6ef5 100%);
     color: white;
-    padding: 70px 0;
-    text-align: center;
-    border-bottom: 3px solid #3b40a8;
+    padding: 64px 0 72px;
+    position: relative;
+    overflow: hidden;
 }
 
-.hero h1 {
-    font-size: 38px;
-    font-weight: 800;
-    letter-spacing: -0.5px;
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 500px; height: 500px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: 30%;
+    width: 300px; height: 300px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.hero .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 48px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-left h1 {
+    font-size: 46px;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -1px;
+}
+
+.hero-left h1 .accent {
+    color: var(--accent);
+}
+
+.hero-left p {
+    font-size: 15px;
+    opacity: 0.82;
+    margin-bottom: 32px;
+    line-height: 1.6;
+    max-width: 380px;
+}
+
+.hero-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-illustration {
+    width: 100%;
+    max-width: 420px;
+    height: 280px;
+    position: relative;
+}
+
+/* Illustrated hero elements */
+.hero-card-float {
+    position: absolute;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    animation: float 4s ease-in-out infinite;
+}
+
+.hero-card-float:nth-child(2) { animation-delay: -1.5s; }
+.hero-card-float:nth-child(3) { animation-delay: -3s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Big doc card */
+.hero-doc {
+    position: absolute;
+    right: 0; top: 10px;
+    width: 200px;
+    background: rgba(255,255,255,0.14);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+}
+
+.hero-doc .doc-icon {
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
     margin-bottom: 12px;
 }
 
-.hero p {
-    font-size: 16px;
-    opacity: 0.85;
-    margin-bottom: 32px;
+.hero-doc .doc-lines {
+    display: flex; flex-direction: column; gap: 6px;
 }
 
+.hero-doc .doc-line {
+    height: 7px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 4px;
+}
+
+.hero-doc .doc-line:nth-child(2) { width: 70%; }
+.hero-doc .doc-line:nth-child(3) { width: 50%; }
+
+.hero-search-float {
+    position: absolute;
+    left: 0; top: 30px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    animation: float 5s ease-in-out infinite;
+}
+
+.hero-search-float .search-icon {
+    width: 32px; height: 32px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+}
+
+.hero-search-float .search-text {
+    display: flex; flex-direction: column;
+}
+
+.hero-search-float .search-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+}
+
+.hero-search-float .search-sub {
+    font-size: 11px;
+    opacity: 0.7;
+    color: white;
+}
+
+.hero-stats-float {
+    position: absolute;
+    left: 20px; bottom: 20px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 12px;
+    padding: 12px 18px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    animation: float 3.5s ease-in-out infinite;
+    animation-delay: -2s;
+}
+
+.hero-stats-float .stat-number {
+    font-size: 20px;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+}
+
+.hero-stats-float .stat-label {
+    font-size: 11px;
+    opacity: 0.75;
+    color: white;
+    margin-top: 2px;
+}
+
+/* Search bar */
 .search-bar {
     display: flex;
-    max-width: 720px;
-    margin: 0 auto;
     background: white;
-    border-radius: 8px;
+    border-radius: var(--radius);
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-    border: 1.5px solid #e8eaf0;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    max-width: 620px;
+}
+
+.search-bar-inner {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 10px;
+}
+
+.search-bar-inner .search-icon-inner {
+    color: var(--gray-400);
+    font-size: 16px;
+    flex-shrink: 0;
 }
 
 .search-bar input {
     flex: 1;
-    padding: 16px 20px;
+    padding: 16px 0;
     border: none;
     font-size: 15px;
-    color: #1a1a2e;
+    color: var(--text);
     outline: none;
-}
-
-.search-bar button {
-    padding: 0 36px;
-    background: #4e54c8;
-    color: white;
-    border: none;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-    letter-spacing: 0.3px;
-}
-
-.search-bar button:hover {
-    background: #3b40a8;
+    font-family: inherit;
+    background: transparent;
 }
 
 .city-wrapper {
-    position: relative;
-    border-left: 1.5px solid #e8eaf0;
+    border-left: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    padding: 0 4px 0 16px;
+    gap: 8px;
+    color: var(--gray-400);
 }
+
+.city-icon { font-size: 15px; flex-shrink: 0; }
 
 .city-wrapper select {
     height: 100%;
-    padding: 16px 40px 16px 16px;
+    padding: 16px 36px 16px 0;
     border: none;
     font-size: 15px;
-    background-color: white;
+    background: transparent;
     cursor: pointer;
     appearance: none;
-    color: #1a1a2e;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%2716%27 height=%2710%27 viewBox=%270 0 16 10%27><path d=%27M1 1L8 8L15 1%27 stroke=%27%23555%27 stroke-width=%272%27 stroke-linecap=%27round%27 fill=%27none%27/></svg>');
+    color: var(--text);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%278%27 viewBox=%270 0 12 8%27><path d=%27M1 1L6 6L11 1%27 stroke=%27%239ca3bc%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 fill=%27none%27/></svg>');
     background-repeat: no-repeat;
-    background-position: right 14px center;
+    background-position: right 8px center;
     outline: none;
+    font-family: inherit;
 }
 
-/* ==================== СЕКЦИЯ ВАКАНСИЙ ==================== */
-.jobs-section {
-    padding: 48px 0;
-}
-
-.jobs-section h2 {
-    font-size: 22px;
+#search-btn {
+    padding: 0 32px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    font-size: 15px;
     font-weight: 700;
-    color: #1a1a2e;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.3px;
+    font-family: inherit;
+    flex-shrink: 0;
+}
+
+#search-btn:hover { background: var(--primary-dark); }
+
+/* ==================== CATEGORIES ==================== */
+.categories-section {
+    padding: 36px 0 8px;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+}
+
+.category-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 20px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.category-card:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.category-icon {
+    width: 48px; height: 48px;
+    background: rgba(61,61,180,0.08);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: var(--primary);
+    transition: all 0.2s;
+}
+
+.category-card:hover .category-icon {
+    background: var(--primary);
+    color: white;
+}
+
+.category-name {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.category-count {
+    font-size: 12px;
+    color: var(--gray-400);
+    font-weight: 500;
+}
+
+/* ==================== JOBS SECTION ==================== */
+.jobs-section {
+    padding: 40px 0 56px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.section-header h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
     letter-spacing: -0.3px;
-    margin-bottom: 4px;
 }
 
-body.dark .jobs-section h2 {
-    color: #e0e0e0;
+.see-all-link {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: gap 0.2s;
 }
 
-/* ==================== ФИЛЬТРЫ ==================== */
+.see-all-link:hover { gap: 8px; }
+
+/* Filters */
 .filters {
     display: flex;
     align-items: flex-end;
     gap: 24px;
-    margin: 24px 0 32px;
+    margin-bottom: 24px;
     flex-wrap: wrap;
-    padding: 20px 24px;
-    background: white;
-    border-radius: 8px;
-    border: 1.5px solid #e8eaf0;
-}
-
-body.dark .filters {
-    background: #12121a;
-    border-color: #1e1e2e;
+    padding: 18px 20px;
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-sm);
 }
 
 .salary-filter-box label {
     display: block;
     margin-bottom: 8px;
-    font-weight: 600;
-    font-size: 13.5px;
-    color: #555;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--gray-400);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-body.dark .salary-filter-box label {
-    color: #888;
+    letter-spacing: 0.8px;
 }
 
 .salary-inputs {
@@ -366,27 +623,21 @@ body.dark .salary-filter-box label {
 .salary-inputs input[type="number"] {
     width: 130px;
     padding: 10px 14px;
-    border: 1.5px solid #e8eaf0;
-    border-radius: 6px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-sm);
     font-size: 15px;
-    color: #1a1a2e;
+    color: var(--text);
     outline: none;
     transition: border 0.2s;
+    font-family: inherit;
+    background: var(--white);
 }
 
-.salary-inputs input[type="number"]:focus {
-    border-color: #4e54c8;
-}
-
-body.dark .salary-inputs input[type="number"] {
-    background: #1e1e2e;
-    border-color: #2a2a3e;
-    color: #eee;
-}
+.salary-inputs input[type="number"]:focus { border-color: var(--primary); }
 
 .salary-inputs input[type="range"] {
     flex: 1;
-    accent-color: #4e54c8;
+    accent-color: var(--primary);
 }
 
 .salary-value {
@@ -396,154 +647,236 @@ body.dark .salary-inputs input[type="number"] {
     margin-top: 6px;
 }
 
-/* ==================== КАРТОЧКИ ВАКАНСИЙ ==================== */
+/* Job cards grid */
 .jobs-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 16px;
-    margin-top: 8px;
 }
 
 .job-card {
-    background: white;
-    border-radius: 8px;
-    padding: 24px;
-    border: 1.5px solid #e8eaf0;
-    transition: all 0.2s;
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 22px;
+    border: 1.5px solid var(--gray-200);
+    transition: all 0.22s;
     position: relative;
-}
-
-body.dark .job-card {
-    background: #12121a;
-    border-color: #1e1e2e;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .job-card:hover {
-    border-color: #4e54c8;
-    box-shadow: 0 4px 20px rgba(78, 84, 200, 0.1);
-    transform: translateY(-2px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+}
+
+.job-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 10px;
+}
+
+.company-logo {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    background: var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+    color: var(--primary);
+    font-weight: 900;
+    font-size: 16px;
+}
+
+.job-card-title-group {
+    flex: 1;
+    min-width: 0;
 }
 
 .job-card h3 {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
-    color: #4e54c8;
-    margin-bottom: 6px;
-    letter-spacing: -0.2px;
+    color: var(--text);
+    margin-bottom: 3px;
+    line-height: 1.3;
 }
 
-.job-card p {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 4px;
-}
-
-body.dark .job-card p {
-    color: #aaa;
+.job-card .company-name {
+    font-size: 13px;
+    color: var(--gray-400);
+    font-weight: 500;
 }
 
 .salary {
     color: #27ae60;
-    font-weight: 700;
+    font-weight: 800;
     font-size: 17px;
-    margin: 10px 0 !important;
+    margin: 6px 0 !important;
+    font-family: inherit;
+}
+
+.job-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--gray-600);
+    margin-bottom: 6px;
+}
+
+.job-meta-icon { opacity: 0.6; font-size: 12px; }
+
+.job-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.job-tag {
+    padding: 4px 10px;
+    background: var(--gray-100);
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-600);
 }
 
 .respond-btn {
-    margin-top: 16px;
+    margin-top: 14px;
     width: 100%;
-    padding: 10px;
-    background: #4e54c8;
-    color: white;
-    border: none;
-    border-radius: 6px;
+    padding: 11px;
+    background: rgba(61,61,180,0.07);
+    color: var(--primary);
+    border: 1.5px solid rgba(61,61,180,0.2);
+    border-radius: var(--radius-sm);
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
     letter-spacing: 0.2px;
+    font-family: inherit;
 }
 
 .respond-btn:hover {
-    background: #3b40a8;
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
-/* ==================== МОДАЛЬНЫЕ ОКНА ==================== */
+/* ==================== FEATURES / BENEFITS ==================== */
+.features-section {
+    padding: 48px 0 64px;
+    background: var(--white);
+    border-top: 1px solid var(--gray-200);
+    margin-top: 16px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.feature-icon-wrap {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: rgba(61,61,180,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: var(--primary);
+}
+
+.feature-item h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 2px;
+}
+
+.feature-item p {
+    font-size: 13.5px;
+    color: var(--gray-600);
+    line-height: 1.5;
+}
+
+/* ==================== MODALS ==================== */
 .modal {
     display: none;
     position: fixed;
     top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(10, 10, 20, 0.7);
-    backdrop-filter: blur(6px);
+    width: 100%; height: 100%;
+    background: rgba(15, 16, 32, 0.75);
+    backdrop-filter: blur(8px);
     z-index: 2000;
     align-items: center;
     justify-content: center;
 }
 
 .modal-content {
-    background: white;
+    background: var(--white);
     padding: 36px 32px;
-    border-radius: 12px;
+    border-radius: 16px;
     width: 100%;
-    max-width: 420px;
-    border: 1.5px solid #e8eaf0;
+    max-width: 440px;
+    border: 1px solid var(--gray-200);
     position: relative;
+    box-shadow: var(--shadow-lg);
 }
 
-body.dark .modal-content {
-    background: #12121a;
-    border-color: #1e1e2e;
-    color: #e0e0e0;
-}
-
-.close-modal,
-.close-register,
-.close-post-job,
-.close-respond,
-.close-applications,
-.close-chat,
-.close-my-jobs,
-.close-resume {
+.close-modal, .close-register, .close-post-job, .close-respond,
+.close-applications, .close-chat, .close-my-jobs, .close-resume {
     position: absolute;
-    top: 16px;
-    right: 20px;
-    font-size: 24px;
+    top: 16px; right: 20px;
+    font-size: 22px;
     cursor: pointer;
-    color: #aaa;
+    color: var(--gray-400);
     transition: color 0.2s;
     line-height: 1;
+    background: none;
+    border: none;
+    width: 32px; height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
 }
 
-.close-modal:hover,
-.close-register:hover,
-.close-post-job:hover,
-.close-respond:hover,
-.close-applications:hover,
-.close-chat:hover,
-.close-my-jobs:hover,
-.close-resume:hover {
-    color: #1a1a2e;
-}
-
-body.dark .close-modal:hover {
-    color: #fff;
+.close-modal:hover, .close-register:hover, .close-post-job:hover,
+.close-respond:hover, .close-applications:hover, .close-chat:hover,
+.close-my-jobs:hover, .close-resume:hover {
+    color: var(--text);
+    background: var(--gray-100);
 }
 
 .modal h2 {
     font-size: 22px;
-    font-weight: 700;
+    font-weight: 800;
     margin-bottom: 24px;
     letter-spacing: -0.3px;
-    color: #1a1a2e;
+    color: var(--text);
 }
 
-body.dark .modal h2 {
-    color: #e0e0e0;
-}
-
-/* ==================== ФОРМЫ ==================== */
+/* Forms */
 .form-group {
     margin-bottom: 18px;
 }
@@ -551,15 +884,11 @@ body.dark .modal h2 {
 .form-group label {
     display: block;
     margin-bottom: 6px;
-    font-weight: 600;
-    font-size: 13.5px;
-    color: #555;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--gray-600);
     text-transform: uppercase;
-    letter-spacing: 0.4px;
-}
-
-body.dark .form-group label {
-    color: #888;
+    letter-spacing: 0.6px;
 }
 
 .form-group input,
@@ -567,78 +896,59 @@ body.dark .form-group label {
 .role-select select {
     width: 100%;
     padding: 12px 14px;
-    border: 1.5px solid #e8eaf0;
-    border-radius: 6px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-sm);
     font-size: 15px;
-    color: #1a1a2e;
+    color: var(--text);
     transition: border 0.2s;
     outline: none;
-    background: white;
+    background: var(--white);
+    font-family: inherit;
 }
 
-body.dark .form-group input,
-body.dark .form-group textarea,
-body.dark .role-select select {
-    background: #1e1e2e;
-    border-color: #2a2a3e;
-    color: #fff;
+.form-group input:focus, .form-group textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(61,61,180,0.08);
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-    border-color: #4e54c8;
-}
-
-.login-submit-btn,
-.register-submit-btn {
+.login-submit-btn, .register-submit-btn {
     width: 100%;
     padding: 13px;
     border: none;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     margin-top: 8px;
     transition: all 0.2s;
     letter-spacing: 0.3px;
-}
-
-.login-submit-btn {
-    background: #4e54c8;
+    background: var(--primary);
     color: white;
+    font-family: inherit;
 }
 
-.login-submit-btn:hover {
-    background: #3b40a8;
-}
-
-.register-submit-btn {
-    background: #4e54c8;
-    color: white;
-}
-
-.register-submit-btn:hover {
-    background: #3b40a8;
+.login-submit-btn:hover, .register-submit-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
 .modal-footer {
     margin-top: 20px;
     text-align: center;
     font-size: 14px;
-    color: #777;
+    color: var(--gray-400);
 }
 
 .modal-footer a {
-    color: #4e54c8;
-    font-weight: 600;
+    color: var(--primary);
+    font-weight: 700;
     text-decoration: none;
 }
 
-.modal-footer a:hover {
-    text-decoration: underline;
-}
+.modal-footer a:hover { text-decoration: underline; }
 
-/* ==================== КАРТОЧКИ ОТКЛИКОВ ==================== */
+/* ==================== APPLICATIONS ==================== */
 .applications-list {
     max-height: 65vh;
     overflow-y: auto;
@@ -646,133 +956,68 @@ body.dark .role-select select {
 }
 
 .application-item {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 12px;
-    border: 1.5px solid #e8eaf0;
+    background: var(--gray-50);
+    border-radius: var(--radius-sm);
+    padding: 18px;
+    margin-bottom: 10px;
+    border: 1px solid var(--gray-200);
     transition: all 0.2s;
 }
 
-body.dark .application-item {
-    background: #1e1e2e;
-    border-color: #2a2a3e;
-}
-
-.application-item:hover {
-    border-color: #4e54c8;
-}
+.application-item:hover { border-color: var(--primary); }
 
 .app-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     flex-wrap: wrap;
     gap: 8px;
 }
 
-.app-header strong {
-    font-size: 15px;
-    font-weight: 700;
-    color: #4e54c8;
-}
+.app-header strong { font-size: 15px; font-weight: 700; color: var(--primary); }
+.app-header span { font-size: 13px; color: var(--gray-400); }
 
-body.dark .app-header strong {
-    color: #8f94fb;
-}
+.cover-letter { font-size: 14px; color: var(--gray-600); margin-top: 8px; line-height: 1.5; }
 
-.app-header span {
-    font-size: 13px;
-    color: #999;
-}
-
-.cover-letter {
-    font-size: 14px;
-    color: #666;
-    margin-top: 8px;
-    line-height: 1.5;
-}
-
-body.dark .cover-letter {
-    color: #aaa;
-}
-
-/* ==================== КНОПКИ ДЕЙСТВИЙ ==================== */
+/* Buttons in applications */
 .edit-job-btn, .delete-job-btn, .open-chat-btn {
     padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-size: 13.5px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
-    letter-spacing: 0.2px;
+    font-family: inherit;
 }
 
-.edit-job-btn {
-    background: #f0f1ff;
-    color: #4e54c8;
-    border: 1.5px solid #d0d3f5;
-}
+.edit-job-btn { background: rgba(61,61,180,0.07); color: var(--primary); border: 1.5px solid rgba(61,61,180,0.2); }
+.edit-job-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
 
-.edit-job-btn:hover {
-    background: #4e54c8;
-    color: white;
-}
+.delete-job-btn { background: transparent; color: #e63946; border: 1.5px solid #e63946; }
+.delete-job-btn:hover { background: #e63946; color: white; }
 
-.delete-job-btn {
-    background: transparent;
-    color: #e63946;
-    border: 1.5px solid #e63946;
-}
+.open-chat-btn { background: rgba(61,61,180,0.07); color: var(--primary); border: 1.5px solid rgba(61,61,180,0.2); }
+.open-chat-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
 
-.delete-job-btn:hover {
-    background: #e63946;
-    color: white;
-}
-
-.open-chat-btn {
-    background: #f0f1ff;
-    color: #4e54c8;
-    border: 1.5px solid #d0d3f5;
-}
-
-.open-chat-btn:hover {
-    background: #4e54c8;
-    color: white;
-}
-
-/* ==================== ЧАТ ==================== */
+/* Chat */
 .chat-messages {
-    background: #f4f6f9;
-    border-radius: 8px;
+    background: var(--gray-50);
+    border-radius: var(--radius-sm);
     padding: 16px;
     height: 420px;
     overflow-y: auto;
     margin-bottom: 12px;
     display: flex;
     flex-direction: column;
-    border: 1.5px solid #e8eaf0;
+    border: 1px solid var(--gray-200);
 }
 
-body.dark .chat-messages {
-    background: #1e1e2e;
-    border-color: #2a2a3e;
-}
-
-.chat-message {
-    margin-bottom: 14px;
-    max-width: 80%;
-}
-
-.my-message {
-    margin-left: auto;
-    text-align: right;
-}
+.chat-message { margin-bottom: 14px; max-width: 80%; }
+.my-message { margin-left: auto; text-align: right; }
 
 .my-message p {
-    background: #4e54c8;
+    background: var(--primary);
     color: white;
     padding: 10px 14px;
     border-radius: 12px 12px 2px 12px;
@@ -780,224 +1025,157 @@ body.dark .chat-messages {
     font-size: 14px;
 }
 
-.their-message {
-    margin-right: auto;
-}
+.their-message { margin-right: auto; }
 
 .their-message p {
-    background: white;
-    color: #1a1a2e;
+    background: var(--white);
+    color: var(--text);
     padding: 10px 14px;
     border-radius: 12px 12px 12px 2px;
     display: inline-block;
     font-size: 14px;
-    border: 1.5px solid #e8eaf0;
+    border: 1px solid var(--gray-200);
 }
 
-body.dark .their-message p {
-    background: #2a2a3e;
-    color: #e0e0e0;
-    border-color: #3a3a4e;
-}
+.chat-message small { display: block; font-size: 11px; color: var(--gray-400); margin-bottom: 4px; }
 
-.chat-message small {
-    display: block;
-    font-size: 11px;
-    color: #aaa;
-    margin-bottom: 4px;
-}
-
-/* ==================== КНОПКА ОТПРАВИТЬ В ЧАТЕ ==================== */
 #chat-send-btn {
     padding: 10px 24px;
-    background: #4e54c8;
+    background: var(--primary);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
     align-self: flex-end;
-    letter-spacing: 0.2px;
+    font-family: inherit;
 }
 
-#chat-send-btn:hover {
-    background: #3b40a8;
-}
+#chat-send-btn:hover { background: var(--primary-dark); }
 
-/* ==================== КНОПКА СВЯЗАТЬСЯ ==================== */
 .contact-candidate-btn {
     padding: 8px 16px;
     background: transparent;
     color: #27ae60;
     border: 1.5px solid #27ae60;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-size: 13.5px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
+    font-family: inherit;
 }
 
-.contact-candidate-btn:hover {
-    background: #27ae60;
-    color: white;
-}
+.contact-candidate-btn:hover { background: #27ae60; color: white; }
 
-/* ==================== КНОПКА ПОСМОТРЕТЬ РЕЗЮМЕ ==================== */
 .view-resume-btn {
     padding: 8px 16px;
     background: transparent;
-    color: #4e54c8;
-    border: 1.5px solid #4e54c8;
-    border-radius: 6px;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+    border-radius: var(--radius-sm);
     font-size: 13.5px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
+    font-family: inherit;
 }
 
-.view-resume-btn:hover {
-    background: #4e54c8;
-    color: white;
-}
+.view-resume-btn:hover { background: var(--primary); color: white; }
 
-body.dark .view-resume-btn {
-    color: #8f94fb;
-    border-color: #8f94fb;
-}
-
-body.dark .view-resume-btn:hover {
-    background: #8f94fb;
-    color: #0d0d14;
-}
-
-/* ==================== КНОПКА ПОКАЗАТЬ ПОЛНОСТЬЮ ==================== */
 .toggle-about-btn {
     background: transparent;
     border: none;
-    color: #4e54c8;
+    color: var(--primary);
     font-size: 13.5px;
     font-weight: 600;
     padding: 4px 0;
     cursor: pointer;
     text-decoration: underline;
     text-underline-offset: 3px;
-    transition: all 0.2s;
+    font-family: inherit;
 }
 
-body.dark .toggle-about-btn {
-    color: #8f94fb;
+/* Button group (job form) */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 5px;
+    background: var(--gray-100);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-sm);
 }
 
-/* ==================== СПЕЦИАЛЬНЫЕ МОДАЛКИ ==================== */
-#resume-modal .modal-content,
-#post-job-modal .modal-content,
-#my-jobs-modal .modal-content,
-#applications-modal .modal-content,
-#chat-modal .modal-content {
-    max-width: 720px;
-    width: 95%;
+.type-btn {
+    padding: 9px 14px;
+    font-size: 13.5px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--white);
+    color: var(--gray-600);
+    white-space: nowrap;
+    font-family: inherit;
 }
 
-#job-description {
-    min-height: 160px;
-    resize: vertical;
+.type-btn:hover { background: var(--gray-50); transform: translateY(-1px); }
+
+.type-btn.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 3px 10px rgba(61,61,180,0.3);
 }
 
-/* ==================== REMEMBER ME ==================== */
+/* Remember me */
 .remember-me {
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 14px;
-    color: #666;
+    color: var(--gray-600);
     margin-bottom: 16px;
     cursor: pointer;
 }
 
-/* ==================== FORGOT PASSWORD ==================== */
 .forgot-password {
-    color: #999;
+    color: var(--gray-400);
     font-size: 13px;
     text-decoration: none;
     display: block;
     margin-top: 8px;
 }
 
-.forgot-password:hover {
-    color: #4e54c8;
-}
+.forgot-password:hover { color: var(--primary); }
+
+/* Textarea */
+#job-description { min-height: 160px; resize: vertical; }
 
 /* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+    .categories-grid { grid-template-columns: repeat(3, 1fr); }
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 @media (max-width: 768px) {
-    .search-bar {
-        flex-direction: column;
-    }
-
-    .filters {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .hero h1 {
-        font-size: 28px;
-    }
-
-    .header .container {
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-}
-.button-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 5px;
-    background: #f8fafc;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 8px;
+    .hero .container { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero h1 { font-size: 32px; }
+    .search-bar { flex-direction: column; border-radius: var(--radius); overflow: visible; }
+    .search-bar > * { border-radius: var(--radius-sm) !important; }
+    .categories-grid { grid-template-columns: repeat(3, 1fr); }
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .filters { flex-direction: column; align-items: stretch; }
+    .header .container { flex-wrap: wrap; gap: 10px; }
+    .jobs-grid { grid-template-columns: 1fr; }
 }
 
-body.dark .button-group {
-    background: #1e2937;
-    border-color: #334155;
-}
-
-.type-btn {
-    padding: 10px 14px;
-    font-size: 14px;
-    font-weight: 600;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background: white;
-    color: #475569;
-    white-space: nowrap;
-}
-
-body.dark .type-btn {
-    background: #334155;
-    color: #e2e8f0;
-}
-
-.type-btn:hover {
-    background: #f1f5f9;
-    transform: translateY(-1px);
-}
-
-body.dark .type-btn:hover {
-    background: #475569;
-}
-
-.type-btn.active {
-    background: #4e54c8;
-    color: white;
-    box-shadow: 0 3px 10px rgba(78, 84, 200, 0.3);
-}
-
-body.dark .type-btn.active {
-    background: #6366f1;
-    box-shadow: 0 3px 10px rgba(99, 102, 241, 0.4);
+@media (max-width: 480px) {
+    .categories-grid { grid-template-columns: repeat(2, 1fr); }
+    .features-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 28px; }
 }
