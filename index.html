@@ -6,6 +6,10 @@
     <title>WorkFlow — Работа в удовольствие</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Firebase SDK (Compat version - проще для твоего проекта) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
     <!-- HEADER -->
@@ -198,41 +202,43 @@
                 <label>Опыт работы</label>
                 <input type="text" id="job-experience" placeholder="1-3 года / Без опыта" required>
             </div>
-            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+    
+    <!-- Тип занятости -->
     <div class="form-group">
         <label>Тип занятости</label>
-        <select id="job-type">
-            <option value="Полная занятость">Полная занятость</option>
-            <option value="Частичная занятость">Частичная занятость</option>
-            <option value="Стажировка">Стажировка</option>
-            <option value="Проектная работа">Проектная работа</option>
-        </select>
+        <div class="button-group" id="job-type-group">
+            <button type="button" class="type-btn active" data-value="Полная занятость">Полная</button>
+            <button type="button" class="type-btn" data-value="Частичная занятость">Частичная</button>
+            <button type="button" class="type-btn" data-value="Стажировка">Стажировка</button>
+            <button type="button" class="type-btn" data-value="Проектная работа">Проектная</button>
+        </div>
+        <input type="hidden" id="job-type" value="Полная занятость">
     </div>
+
+    <!-- Формат работы -->
     <div class="form-group">
         <label>Формат работы</label>
-        <select id="job-remote">
-            <option value="Офис">Офис</option>
-            <option value="Удалённо">Удалённо</option>
-            <option value="Гибрид">Гибрид</option>
-        </select>
+        <div class="button-group" id="job-remote-group">
+            <button type="button" class="type-btn active" data-value="Офис">Офис</button>
+            <button type="button" class="type-btn" data-value="Удалённо">Удалённо</button>
+            <button type="button" class="type-btn" data-value="Гибрид">Гибрид</button>
+        </div>
+        <input type="hidden" id="job-remote" value="Офис">
     </div>
 </div>
 
-<div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-    <div class="form-group">
-        <label>Часов в день</label>
-        <input type="number" id="job-hours" placeholder="8" min="1" max="24" required>
+<!-- График работы - отдельно, т.к. вариантов много -->
+<div class="form-group">
+    <label>График</label>
+    <div class="button-group" id="job-schedule-group" style="flex-wrap: wrap;">
+        <button type="button" class="type-btn active" data-value="5/2">5/2 (Пн-Пт)</button>
+        <button type="button" class="type-btn" data-value="2/2">2/2</button>
+        <button type="button" class="type-btn" data-value="6/1">6/1</button>
+        <button type="button" class="type-btn" data-value="Гибкий">Гибкий</button>
+        <button type="button" class="type-btn" data-value="Сменный">Сменный</button>
     </div>
-    <div class="form-group">
-        <label>График</label>
-        <select id="job-schedule">
-            <option value="5/2">5/2 (Пн-Пт)</option>
-            <option value="2/2">2/2</option>
-            <option value="6/1">6/1</option>
-            <option value="Гибкий">Гибкий график</option>
-            <option value="Сменный">Сменный график</option>
-        </select>
-    </div>
+    <input type="hidden" id="job-schedule" value="5/2">
 </div>
 
             <div class="form-group">

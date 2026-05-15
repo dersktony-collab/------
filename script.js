@@ -19,6 +19,21 @@ function saveJobs(jobs) {
 
 // ====================== ОСНОВНОЙ КОД ======================
 document.addEventListener('DOMContentLoaded', () => {
+    // ====================== FIREBASE CONFIG ======================
+const firebaseConfig = {
+    apiKey: "AIzaSyCOeuIiRllmoAdwyfdAGZ-rI-9uETTZ9U",
+    authDomain: "workflow-job-40c66.firebaseapp.com",
+    projectId: "workflow-job-40c66",
+    storageBucket: "workflow-job-40c66.firebasestorage.app",
+    messagingSenderId: "47478848425",
+    appId: "1:47478848425:web:527882fda5e852cf3562b8b",
+    measurementId: "G-HXFGDXK7N0"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
 
     let jobs = getJobs();
     let applications = JSON.parse(localStorage.getItem('applications') || '[]');
@@ -666,7 +681,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resumeModal.style.display = 'none';
     });
 
-    // Список всех резюме для работодателя
+       // Список всех резюме для работодателя
     function showAllResumesInResumeModal() {
         const modalTitle = document.querySelector('#resume-modal h2');
         if (modalTitle) modalTitle.textContent = 'Резюме соискателей';
@@ -709,7 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
             div.innerHTML = `
                 <div class="app-header">
                     <strong>${user.name}</strong>
-                    <span>${resume.position}</span>
+                    <span>${resume.position || '—'}</span>
                 </div>
                 <p><strong>Город:</strong> ${resume.city} • <strong>Опыт:</strong> ${resume.experience} лет</p>
                 
@@ -721,9 +736,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     </button>` : ''}
                 </div>
 
+                ${currentUser && currentUser.role === 'employer' ? `
                 <button class="contact-candidate-btn" data-user-id="${user.id}" data-user-name="${user.name}" style="margin-top:12px;">
-    Связаться
-</button>
+                    Связаться
+                </button>` : ''}
             `;
             listContainer.appendChild(div);
         });
@@ -734,7 +750,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         resumeModal.style.display = 'flex';
     }
-
     // Раскрытие / скрытие текста "О себе"
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('toggle-about-btn')) {
@@ -789,6 +804,20 @@ document.addEventListener('DOMContentLoaded', () => {
         registerModal.style.display = 'none'; 
         loginModal.style.display = 'flex';
     });
+    // Обработка всех групп кнопок
+document.querySelectorAll('.button-group').forEach(group => {
+    group.addEventListener('click', (e) => {
+        if (e.target.classList.contains('type-btn')) {
+            group.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+            
+            const hiddenInput = group.parentElement.querySelector('input[type="hidden"]');
+            if (hiddenInput) {
+                hiddenInput.value = e.target.dataset.value;
+            }
+        }
+    });
+});
 
     // Запуск
     updateSalaryDisplay();
