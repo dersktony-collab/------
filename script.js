@@ -20,6 +20,10 @@ let applications = [];        // массив откликов из Firestore
 let editingJobId = null;      // id вакансии при редактировании
 let currentChatAppId = null;  // id отклика в открытом чате
 let unsubscribeChat = null;   // отписка от слушателя чата
+let activeCategory = '';
+let filterType     = '';
+let filterRemote   = '';
+let filterSchedule = '';
 
 // ====================== DOM-ЭЛЕМЕНТЫ ======================
 let loginModal, registerModal, postJobModal, respondModal, 
@@ -310,6 +314,7 @@ function firebaseErrorRu(code) {
 function loadJobs() {
     db.collection('jobs').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
         jobs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        updateCategoryCounts();
         renderJobs(getFilteredJobs());
     });
 }
@@ -802,13 +807,24 @@ function getFilteredJobs() {
 
     return jobs.filter(job => {
         const matchText = !searchText ||
-            job.title.toLowerCase().includes(searchText) ||
-            job.company.toLowerCase().includes(searchText);
+            job.title?.toLowerCase().includes(searchText) ||
+            job.company?.toLowerCase().includes(searchText);
+
         const matchCity = !selectedCity || job.city === selectedCity;
-        return matchText && matchCity && job.salary >= minSalary;
+
+        const matchCategory = !activeCategory ||
+            job.title?.toLowerCase().includes(activeCategory.toLowerCase()) ||
+            job.description?.toLowerCase().includes(activeCategory.toLowerCase());
+
+        const matchType     = !filterType     || job.type     === filterType;
+        const matchRemote   = !filterRemote   || job.remote   === filterRemote;
+        const matchSchedule = !filterSchedule || job.schedule === filterSchedule;
+
+        return matchText && matchCity && matchCategory &&
+               matchType && matchRemote && matchSchedule &&
+               job.salary >= minSalary;
     });
 }
-
 function renderJobs(filteredJobs) {
     const container = document.getElementById('jobs-grid');
     container.innerHTML = '';
@@ -854,7 +870,6 @@ salaryInput.addEventListener('input', () => {
 });
 
 document.getElementById('search-input').addEventListener('input', () => renderJobs(getFilteredJobs()));
-document.getElementById('city-select').addEventListener('change', () => renderJobs(getFilteredJobs()));
 document.getElementById('search-btn').addEventListener('click', () => renderJobs(getFilteredJobs()));
 
 // Ссылки между модалками
@@ -873,3 +888,321 @@ document.getElementById('login-link')?.addEventListener('click', e => {
 initTheme();
 updateSalaryDisplay();
 initModals();
+initCitySelect();
+initCategories();
+initFilters();
+initRegisterSteps();
+
+// ====================== ШАГИ РЕГИСТРАЦИИ ======================
+function initRegisterSteps() {
+    const step1      = document.getElementById('register-step-1');
+    const step2      = document.getElementById('register-step-2');
+    const nextBtn    = document.getElementById('role-next-btn');
+    const backBtn    = document.getElementById('register-back-btn');
+    const badge      = document.getElementById('register-role-badge');
+    const roleInput  = document.getElementById('reg-role');
+    const cardCandidate = document.getElementById('role-candidate');
+    const cardEmployer  = document.getElementById('role-employer');
+
+    let selectedRole = '';
+
+    function selectRole(role, card) {
+        selectedRole = role;
+        cardCandidate.classList.remove('selected');
+        cardEmployer.classList.remove('selected');
+        card.classList.add('selected');
+        nextBtn.disabled = false;
+        nextBtn.style.opacity = '1';
+        nextBtn.style.cursor = 'pointer';
+    }
+
+    cardCandidate.addEventListener('click', () => selectRole('candidate', cardCandidate));
+    cardEmployer.addEventListener('click',  () => selectRole('employer',  cardEmployer));
+
+    nextBtn.addEventListener('click', () => {
+        if (!selectedRole) return;
+        roleInput.value = selectedRole;
+        badge.textContent = selectedRole === 'candidate' ? '👤 Соискатель' : '🏢 Работодатель';
+        step1.style.display = 'none';
+        step2.style.display = 'block';
+    });
+
+    backBtn.addEventListener('click', () => {
+        step2.style.display = 'none';
+        step1.style.display = 'block';
+    });
+
+    // Сброс при закрытии модалки
+    document.querySelector('.close-register').addEventListener('click', () => {
+        step1.style.display = 'block';
+        step2.style.display = 'none';
+        selectedRole = '';
+        cardCandidate.classList.remove('selected');
+        cardEmployer.classList.remove('selected');
+        nextBtn.disabled = true;
+        nextBtn.style.opacity = '0.5';
+        nextBtn.style.cursor = 'not-allowed';
+    });
+}
+
+
+
+function initCitySelect() {
+    const cities = [
+        'Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург',
+        'Казань', 'Нижний Новгород', 'Челябинск', 'Самара',
+        'Ростов-на-Дону', 'Уфа', 'Красноярск', 'Пермь',
+        'Воронеж', 'Краснодар', 'divider', 'Удалённо'
+    ];
+
+    const wrap     = document.getElementById('citySelectWrap');
+    const trigger  = document.getElementById('csTrigger');
+    const dropdown = document.getElementById('csDropdown');
+    const list     = document.getElementById('csList');
+    const labelEl  = document.getElementById('csLabel');
+    const hidden   = document.getElementById('city-select');
+
+    if (!wrap) return;
+
+    // Заменяем триггер на поле ввода
+    trigger.innerHTML = `
+        <i class="fas fa-map-marker-alt cs-icon"></i>
+        <input 
+            type="text" 
+            id="csInput" 
+            placeholder="Выберите город" 
+            autocomplete="off"
+            style="
+                border: none;
+                outline: none;
+                background: transparent;
+                font-size: 15px;
+                font-family: inherit;
+                color: #1a1d3a;
+                width: 140px;
+                cursor: pointer;
+            "
+        >
+        <i class="fas fa-chevron-down cs-arrow"></i>
+    `;
+
+    const input = document.getElementById('csInput');
+
+    function renderList(filter = '') {
+        list.innerHTML = '';
+
+        // Кнопка сброса если город выбран
+        if (hidden.value) {
+            const reset = document.createElement('div');
+            reset.className = 'cs-option cs-reset';
+            reset.innerHTML = `<i class="fas fa-times" style="font-size:12px;color:#e63946;width:16px;text-align:center;"></i>Сбросить выбор`;
+            reset.style.color = '#e63946';
+            reset.addEventListener('click', () => {
+                hidden.value = '';
+                input.value = '';
+                input.placeholder = 'Выберите город';
+                close();
+                renderJobs(getFilteredJobs());
+            });
+            list.appendChild(reset);
+
+            const div = document.createElement('div');
+            div.className = 'cs-divider';
+            list.appendChild(div);
+        }
+
+        const filtered = filter
+            ? cities.filter(c => c !== 'divider' && c.toLowerCase().includes(filter.toLowerCase()))
+            : cities;
+
+        let hasResults = false;
+
+        filtered.forEach(c => {
+            if (c === 'divider') {
+                if (!filter) {
+                    const div = document.createElement('div');
+                    div.className = 'cs-divider';
+                    list.appendChild(div);
+                }
+                return;
+            }
+
+            hasResults = true;
+            const div = document.createElement('div');
+            div.className = 'cs-option' + (hidden.value === c ? ' selected' : '');
+            const icon = c === 'Удалённо' ? 'fa-home' : 'fa-building';
+            div.innerHTML = `<i class="fas ${icon}" style="font-size:12px;color:#9ca3bc;width:16px;text-align:center;"></i>${c}<i class="fas fa-check cs-check"></i>`;
+            div.addEventListener('click', () => {
+                hidden.value = c;
+                input.value = c;
+                list.querySelectorAll('.cs-option').forEach(o => o.classList.remove('selected'));
+                div.classList.add('selected');
+                close();
+                renderJobs(getFilteredJobs());
+            });
+            list.appendChild(div);
+        });
+
+        // Если ничего не найдено — показать вариант "добавить свой"
+        if (!hasResults) {
+            const div = document.createElement('div');
+            div.className = 'cs-option';
+            div.innerHTML = `<i class="fas fa-plus" style="font-size:12px;color:#3d3db4;width:16px;text-align:center;"></i>Использовать «${filter}»`;
+            div.style.color = '#3d3db4';
+            div.addEventListener('click', () => {
+                hidden.value = filter;
+                input.value = filter;
+                close();
+                renderJobs(getFilteredJobs());
+            });
+            list.appendChild(div);
+        }
+    }
+
+    function open() {
+        trigger.classList.add('open');
+        dropdown.classList.add('open');
+        renderList(input.value);
+        input.focus();
+    }
+
+    function close() {
+        trigger.classList.remove('open');
+        dropdown.classList.remove('open');
+    }
+
+    // Клик по иконке или стрелке открывает дропдаун
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (dropdown.classList.contains('open')) {
+            close();
+        } else {
+            open();
+        }
+    });
+
+    // Ввод текста — фильтрация
+    input.addEventListener('input', (e) => {
+        e.stopPropagation();
+        if (!dropdown.classList.contains('open')) {
+            trigger.classList.add('open');
+            dropdown.classList.add('open');
+        }
+        renderList(input.value);
+    });
+
+    // Не закрывать при клике внутри input
+    input.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!dropdown.classList.contains('open')) open();
+    });
+
+    // Закрыть при клике вне
+    document.addEventListener('click', (e) => {
+        if (!wrap.contains(e.target)) close();
+    });
+
+    // Enter — выбрать первый вариант из списка
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const first = list.querySelector('.cs-option:not(.cs-reset)');
+            if (first) first.click();
+        }
+        if (e.key === 'Escape') close();
+    });
+}
+// ====================== ФИЛЬТРЫ-ЧИПЫ ======================
+function initFilters() {
+    // Универсальный обработчик для группы чипов
+    function bindChips(groupId, setter) {
+        const group = document.getElementById(groupId);
+        if (!group) return;
+        group.querySelectorAll('.filter-chip').forEach(btn => {
+            btn.addEventListener('click', () => {
+                group.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                setter(btn.dataset.value);
+                renderJobs(getFilteredJobs());
+            });
+        });
+    }
+
+    bindChips('filter-type',     v => filterType     = v);
+    bindChips('filter-remote',   v => filterRemote   = v);
+    bindChips('filter-schedule', v => filterSchedule = v);
+}
+// ====================== КАТЕГОРИИ ======================
+function initCategories() {
+    document.querySelectorAll('.category-card').forEach(card => {
+        card.addEventListener('click', e => {
+            e.preventDefault();
+
+            document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+
+            activeCategory = card.dataset.cat || '';
+
+            // Сбросить поисковую строку
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) searchInput.value = '';
+
+            renderJobs(getFilteredJobs());
+            document.querySelector('.jobs-section')?.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+}
+
+function updateCategoryCounts() {
+    const categories = ['Разработка', 'Маркетинг', 'Дизайн', 'Продажи', 'СММ'];
+
+    categories.forEach(cat => {
+        const count = jobs.filter(j =>
+            j.title?.toLowerCase().includes(cat.toLowerCase()) ||
+            j.description?.toLowerCase().includes(cat.toLowerCase())
+        ).length;
+
+        const el = document.getElementById(`cat-count-${cat}`);
+        if (el) {
+            if (count === 0) el.textContent = '0 вакансий';
+            else if (count === 1) el.textContent = '1 вакансия';
+            else if (count < 5) el.textContent = `${count} вакансии`;
+            else el.textContent = `${count} вакансий`;
+        }
+    });
+
+    const allEl = document.getElementById('cat-count-all');
+    if (allEl) {
+        const n = jobs.length;
+        if (n === 0) allEl.textContent = '0 вакансий';
+        else if (n === 1) allEl.textContent = '1 вакансия';
+        else if (n < 5) allEl.textContent = `${n} вакансии`;
+        else allEl.textContent = `${n} вакансий`;
+    }
+}
+document.getElementById('nav-vacancies')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.getElementById('jobs-section-anchor');
+    if (!target) return;
+
+    const headerHeight = document.querySelector('.header')?.offsetHeight || 70;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+    const startTop = window.scrollY;
+    const distance = targetTop - startTop;
+    const duration = 800; // миллисекунды — можно увеличить для более медленного скролла
+    let startTime = null;
+
+    function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = easeInOutCubic(progress);
+        window.scrollTo(0, startTop + distance * ease);
+        if (progress < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+});

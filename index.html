@@ -18,7 +18,7 @@
             <div class="logo">Work<span>Flow</span></div>
             
             <nav class="nav">
-                <a href="#" class="nav-link active">Вакансии</a>
+                <a href="#" class="nav-link active" id="nav-vacancies">Вакансии</a>
                 <a href="#" id="nav-resume" class="nav-link">Резюме</a>
             </nav>
 
@@ -71,129 +71,173 @@
                         <i class="fas fa-search search-icon-inner"></i>
                         <input type="text" id="search-input" placeholder="Введите желаемую вакансию">
                     </div>
-                    <div class="city-wrapper">
-                        <i class="fas fa-map-marker-alt city-icon"></i>
-                        <select id="city-select">
-                            <option value="">Выберите город</option>
-                            <option value="Москва">Москва</option>
-                            <option value="Санкт-Петербург">Санкт-Петербург</option>
-                            <option value="Новосибирск">Новосибирск</option>
-                            <option value="Екатеринбург">Екатеринбург</option>
-                            <option value="Казань">Калининград
-                            <option value="Нижний Новгород">Нижний Новгород</option>
-                            <option value="Челябинск">Челябинск</option>
-                            <option value="Самара">Самара</option>
-                            <option value="Ростов-на-Дону">Ростов-на-Дону</option>
-                            <option value="Уфа">Уфа</option>
-                            <option value="Красноярск">Красноярск</option>
-                            <option value="Пермь">Пермь</option>
-                            <option value="Воронеж">Воронеж</option>
-                            <option value="Краснодар">Краснодар</option>
-                            <option value="Удалённо">Удалённо</option>
-                        </select>
-                    </div>
+                    <div class="city-wrapper cs-wrap" id="citySelectWrap">
+    <div class="cs-trigger" id="csTrigger">
+        <i class="fas fa-map-marker-alt cs-icon"></i>
+        <span class="cs-label placeholder" id="csLabel">Выберите город</span>
+        <i class="fas fa-chevron-down cs-arrow"></i>
+    </div>
+    <div class="cs-dropdown" id="csDropdown">
+        <div class="cs-list" id="csList"></div>
+    </div>
+    <input type="hidden" id="city-select" value="">
+</div>
                     <button id="search-btn">Найти</button>
                 </div>
             </div>
             <div class="hero-right">
-                <div class="hero-illustration">
-                    <!-- Floating doc card -->
-                    <div class="hero-doc">
-                        <div class="doc-icon">📄</div>
-                        <div class="doc-lines">
-                            <div class="doc-line"></div>
-                            <div class="doc-line"></div>
-                            <div class="doc-line"></div>
-                        </div>
-                    </div>
-                    <!-- Search float card -->
-                    <div class="hero-search-float">
-                        <div class="search-icon">🔍</div>
-                        <div class="search-text">
-                            <span class="search-title">1 245 вакансий</span>
-                            <span class="search-sub">в разработке</span>
-                        </div>
-                    </div>
-                    <!-- Stats float -->
-                    <div class="hero-stats-float">
-                        <div class="stat-number">0</div>
-                        <div class="stat-label">компаний на платформе</div>
-                    </div>
-                </div>
+               <div class="hero-illustration">
+    <!-- Doc card -->
+    <div class="hero-doc">
+        <div class="doc-icon">
+            <i class="fas fa-file-alt" style="color: white; font-size: 20px;"></i>
+        </div>
+        <div class="doc-content">
+            <div class="doc-title">WorkFlow</div>
+            <div class="doc-slogan">"Работа, которую ты заслуживаешь"</div>
+            <div class="doc-divider"></div>
+            <div class="doc-tags">
+                <span class="doc-tag">Быстро</span>
+                <span class="doc-tag">Удобно</span>
+                <span class="doc-tag">Бесплатно</span>
             </div>
         </div>
+    </div>
+    <!-- Search float card -->
+    <div class="hero-search-float">
+        <div class="search-icon">🔍</div>
+        <div class="search-text">
+            <span class="search-title">1 245 вакансий</span>
+            <span class="search-sub">в разработке</span>
+        </div>
+    </div>
+    <!-- Stats float -->
+    <div class="hero-stats-float">
+        <div class="stat-number">0</div>
+        <div class="stat-label">компаний на платформе</div>
+    </div>
+</div>
     </section>
 
     <!-- CATEGORIES -->
-    <section class="categories-section">
-        <div class="container">
-            <div class="categories-grid">
-                <a href="#" class="category-card" data-cat="Разработка">
-                    <div class="category-icon"><i class="fas fa-code"></i></div>
-                    <div>
-                        <div class="category-name">Разработка</div>
-                        <div class="category-count">1 245 вакансий</div>
-                    </div>
-                </a>
-                <a href="#" class="category-card" data-cat="Маркетинг">
-                    <div class="category-icon"><i class="fas fa-bullhorn"></i></div>
-                    <div>
-                        <div class="category-name">Маркетинг</div>
-                        <div class="category-count">0 вакансий</div>
-                    </div>
-                </a>
-                <a href="#" class="category-card" data-cat="Дизайн">
-                    <div class="category-icon"><i class="fas fa-pen-nib"></i></div>
-                    <div>
-                        <div class="category-name">Дизайн</div>
-                        <div class="category-count">0 вакансий</div>
-                    </div>
-                </a>
-                <a href="#" class="category-card" data-cat="Продажи">
-                    <div class="category-icon"><i class="fas fa-chart-bar"></i></div>
-                    <div>
-                        <div class="category-name">Продажи</div>
-                        <div class="category-count">0 вакансий</div>
-                    </div>
-                </a>
-                <a href="#" class="category-card" data-cat="Поддержка">
-                    <div class="category-icon"><i class="fas fa-headset"></i></div>
-                    <div>
-                        <div class="category-name">Поддержка</div>
-                        <div class="category-count">0 вакансии</div>
-                    </div>
-                </a>
-                <a href="#" class="category-card">
-                    <div class="category-icon"><i class="fas fa-th"></i></div>
-                    <div>
-                        <div class="category-name">Все категории</div>
-                        <div class="category-count">Смотреть все</div>
-                    </div>
-                </a>
-            </div>
+<section class="categories-section">
+    <div class="container">
+          <div class="section-intro">
+            <span class="section-tag">Категории</span>
+            <h2 class="section-title">Популярные категории</h2>
+            <p class="section-sub">Найдите вакансию в своей сфере</p>
         </div>
-    </section>
+        <div class="categories-grid">
+            <a href="#" class="category-card" data-cat="Разработка">
+                <div class="category-icon"><i class="fas fa-code"></i></div>
+                <div>
+                    <div class="category-name">Разработка</div>
+                    <div class="category-count" id="cat-count-Разработка">0 вакансий</div>
+                </div>
+            </a>
+            <a href="#" class="category-card" data-cat="Маркетинг">
+                <div class="category-icon"><i class="fas fa-bullhorn"></i></div>
+                <div>
+                    <div class="category-name">Маркетинг</div>
+                    <div class="category-count" id="cat-count-Маркетинг">0 вакансий</div>
+                </div>
+            </a>
+            <a href="#" class="category-card" data-cat="Дизайн">
+                <div class="category-icon"><i class="fas fa-pen-nib"></i></div>
+                <div>
+                    <div class="category-name">Дизайн</div>
+                    <div class="category-count" id="cat-count-Дизайн">0 вакансий</div>
+                </div>
+            </a>
+            <a href="#" class="category-card" data-cat="Продажи">
+                <div class="category-icon"><i class="fas fa-chart-bar"></i></div>
+                <div>
+                    <div class="category-name">Продажи</div>
+                    <div class="category-count" id="cat-count-Продажи">0 вакансий</div>
+                </div>
+            </a>
+            <a href="#" class="category-card" data-cat="СММ">
+                <div class="category-icon"><i class="fas fa-headset"></i></div>
+                <div>
+                    <div class="category-name">СММ</div>
+                    <div class="category-count" id="cat-count-СММ">0 вакансий</div>
+                </div>
+            </a>
+            <a href="#" class="category-card" data-cat="">
+                <div class="category-icon"><i class="fas fa-th"></i></div>
+                <div>
+                    <div class="category-name">Все категории</div>
+                    <div class="category-count" id="cat-count-all">0 вакансий</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
 
     <!-- VACANCIES -->
+    <div id="jobs-section-anchor"></div>
     <section class="jobs-section">
         <div class="container">
             <div class="section-header">
-                <h2>Популярные вакансии</h2>
+                <h2>Найдите вакансию под себя!</h2>
                 <a href="#" class="see-all-link">Смотреть все →</a>
             </div>
             
-            <!-- Salary filter -->
-            <div class="filters">
-                <div class="salary-filter-box">
-                    <label>Зарплата от, ₽</label>
-                    <div class="salary-inputs">
-                        <input type="number" id="salary-input" placeholder="0" min="0" step="5000">
-                        <input type="range" id="salary-slider" min="0" max="300000" step="5000" value="0">
-                    </div>
-                    <div id="salary-value" class="salary-value">0 ₽</div>
-                </div>
-            </div>
+            
+         <!-- Filters -->
+<div class="filters">
+    <!-- Зарплата -->
+    <div class="filter-group">
+        <label class="filter-label">Зарплата от, ₽</label>
+        <div class="salary-inputs">
+            <input type="number" id="salary-input" placeholder="0" min="0" step="5000">
+            <input type="range" id="salary-slider" min="0" max="300000" step="5000" value="0">
+        </div>
+        <div id="salary-value" class="salary-value">0 ₽</div>
+    </div>
 
+    <div class="filter-divider"></div>
+
+    <!-- Тип занятости -->
+    <div class="filter-group">
+        <label class="filter-label">Тип занятости</label>
+        <div class="filter-chips" id="filter-type">
+            <button class="filter-chip active" data-value="">Все</button>
+            <button class="filter-chip" data-value="Полная занятость">Полная</button>
+            <button class="filter-chip" data-value="Частичная занятость">Частичная</button>
+            <button class="filter-chip" data-value="Стажировка">Стажировка</button>
+            <button class="filter-chip" data-value="Проектная работа">Проектная</button>
+        </div>
+    </div>
+
+    <div class="filter-divider"></div>
+
+    <!-- Формат работы -->
+    <div class="filter-group">
+        <label class="filter-label">Формат работы</label>
+        <div class="filter-chips" id="filter-remote">
+            <button class="filter-chip active" data-value="">Все</button>
+            <button class="filter-chip" data-value="Офис">Офис</button>
+            <button class="filter-chip" data-value="Удалённо">Удалённо</button>
+            <button class="filter-chip" data-value="Гибрид">Гибрид</button>
+        </div>
+    </div>
+
+    <div class="filter-divider"></div>
+
+    <!-- График -->
+    <div class="filter-group">
+        <label class="filter-label">График работы</label>
+        <div class="filter-chips" id="filter-schedule">
+            <button class="filter-chip active" data-value="">Все</button>
+            <button class="filter-chip" data-value="5/2">5/2</button>
+            <button class="filter-chip" data-value="2/2">2/2</button>
+            <button class="filter-chip" data-value="6/1">6/1</button>
+            <button class="filter-chip" data-value="Гибкий">Гибкий</button>
+            <button class="filter-chip" data-value="Сменный">Сменный</button>
+        </div>
+    </div>
+</div>
             <div class="jobs-grid" id="jobs-grid"></div>
         </div>
     </section>
@@ -235,10 +279,55 @@
     </section>
 
     <!-- REGISTER MODAL -->
-    <div id="register-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-register">&times;</span>
-            <h2>Создать аккаунт</h2>
+<div id="register-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-register">&times;</span>
+
+        <!-- ШАГ 1: Выбор роли -->
+        <div id="register-step-1">
+            <h2>Кто вы?</h2>
+            <p style="color: var(--gray-400); font-size: 14px; margin-top: -16px; margin-bottom: 28px;">Выберите тип аккаунта чтобы продолжить</p>
+
+            <div class="role-cards">
+                <div class="role-card" id="role-candidate">
+                    <div class="role-card-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="role-card-title">Соискатель</div>
+                    <div class="role-card-desc">Ищу работу, хочу откликаться на вакансии</div>
+                </div>
+                <div class="role-card" id="role-employer">
+                    <div class="role-card-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="role-card-title">Работодатель</div>
+                    <div class="role-card-desc">Размещаю вакансии, ищу сотрудников</div>
+                </div>
+            </div>
+
+            <button id="role-next-btn" class="register-submit-btn" disabled style="margin-top: 24px; opacity: 0.5; cursor: not-allowed;">
+                Продолжить →
+            </button>
+        </div>
+
+        <!-- ШАГ 2: Форма регистрации -->
+        <div id="register-step-2" style="display: none;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 24px;">
+                <button id="register-back-btn" style="background: none; border: none; cursor: pointer; color: var(--gray-400); font-size: 18px; padding: 0; line-height: 1;">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2 style="margin: 0;">Создать аккаунт</h2>
+                <span id="register-role-badge" style="
+                    margin-left: auto;
+                    padding: 4px 12px;
+                    border-radius: 20px;
+                    font-size: 12px;
+                    font-weight: 700;
+                    background: rgba(61,61,180,0.1);
+                    color: var(--primary);
+                "></span>
+            </div>
+
             <form id="register-form">
                 <div class="form-group">
                     <label>Имя и Фамилия</label>
@@ -260,21 +349,16 @@
                     <label>Подтвердите пароль</label>
                     <input type="password" id="reg-password-confirm" placeholder="Повторите пароль" required>
                 </div>
-                <div class="role-select">
-                    <label style="display:block;margin-bottom:6px;font-weight:700;font-size:12px;color:#6b7394;text-transform:uppercase;letter-spacing:0.6px;">Я хочу</label>
-                    <select id="reg-role">
-                        <option value="candidate">Искать работу (Соискатель)</option>
-                        <option value="employer">Размещать вакансии (Работодатель)</option>
-                    </select>
-                </div>
+                <input type="hidden" id="reg-role" value="">
                 <button type="submit" class="register-submit-btn">Зарегистрироваться</button>
             </form>
+
             <div class="modal-footer">
                 <p>Уже есть аккаунт? <a href="#" id="login-link">Войти</a></p>
             </div>
         </div>
     </div>
-
+</div>
     <!-- POST JOB MODAL -->
     <div id="post-job-modal" class="modal">
         <div class="modal-content" style="max-width: 750px; width: 95%;">
@@ -420,20 +504,6 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-        // Category filter click
-        document.querySelectorAll('.category-card[data-cat]').forEach(card => {
-            card.addEventListener('click', e => {
-                e.preventDefault();
-                const cat = card.dataset.cat;
-                const searchInput = document.getElementById('search-input');
-                if (searchInput) {
-                    searchInput.value = cat;
-                    searchInput.dispatchEvent(new Event('input'));
-                }
-                document.querySelector('.jobs-section')?.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-    </script>
+    
 </body>
 </html>
