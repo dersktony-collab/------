@@ -17,10 +17,11 @@
         <div class="container">
             <div class="logo">Work<span>Flow</span></div>
             
-            <nav class="nav">
-                <a href="#" class="nav-link active" id="nav-vacancies">Вакансии</a>
-                <a href="#" id="nav-resume" class="nav-link">Резюме</a>
-            </nav>
+           <nav class="nav">
+    <a href="#" class="nav-link active" id="nav-vacancies">Вакансии</a>
+    <a href="#" class="nav-link" id="nav-gigs">Подработка</a>
+    <a href="#" id="nav-resume" class="nav-link">Резюме</a>
+</nav>
 
             <div class="header-right">
                 <button id="theme-toggle" class="theme-btn">🌙</button>
@@ -178,11 +179,11 @@
     <div id="jobs-section-anchor"></div>
     <section class="jobs-section">
         <div class="container">
-            <div class="section-header">
-                <h2>Найдите вакансию под себя!</h2>
-                <a href="#" class="see-all-link">Смотреть все →</a>
-            </div>
-            
+            <div class="section-intro">
+    <span class="section-tag">Вакансии</span>
+    <h2 class="section-title">Найдите работу своей мечты</h2>
+    <p class="section-sub">Используйте фильтры чтобы найти идеальную вакансию</p>
+</div>
             
          <!-- Filters -->
 <div class="filters">
@@ -241,6 +242,26 @@
             <div class="jobs-grid" id="jobs-grid"></div>
         </div>
     </section>
+
+    <!-- GIGS SECTION -->
+<div id="gigs-section" style="display:none;">
+    <section class="jobs-section">
+        <div class="container">
+            <div class="section-intro" style="margin-bottom:24px;">
+                <span class="section-tag">Подработка</span>
+                <h2 class="section-title">Однодневные подработки</h2>
+                <p class="section-sub">Быстрый заработок — разместите или найдите подработку за пару минут</p>
+            </div>
+            <div style="display:flex; justify-content:flex-end; margin-bottom:20px;">
+                <button class="post-gig-btn" id="post-gig-btn">
+                    <i class="fas fa-plus"></i>
+                    Разместить подработку
+                </button>
+            </div>
+            <div class="jobs-grid" id="gigs-grid"></div>
+        </div>
+    </section>
+</div>
 
     <!-- FEATURES -->
     <section class="features-section">
@@ -359,6 +380,7 @@
         </div>
     </div>
 </div>
+
     <!-- POST JOB MODAL -->
     <div id="post-job-modal" class="modal">
         <div class="modal-content" style="max-width: 750px; width: 95%;">
@@ -503,7 +525,132 @@
         </div>
     </div>
 
+    <!-- JOB DETAIL MODAL -->
+    <div id="job-detail-modal" class="modal">
+        <div class="modal-content" style="max-width: 680px; width: 95%;">
+            <span class="close-job-detail">&times;</span>
+            <div id="job-detail-body"></div>
+        </div>
+    </div>
+
+    <!-- POST GIG MODAL -->
+    <div id="post-gig-modal" class="modal">
+        <div class="modal-content" style="max-width:620px; width:95%;">
+            <button class="close-post-gig">
+    <i class="fas fa-times"></i>
+</button>
+            <h2>Разместить подработку</h2>
+            <form id="post-gig-form">
+                <div class="form-group">
+                    <label>Название</label>
+                    <input type="text" id="gig-title" placeholder="Например: Грузчик на склад, Промоутер" required>
+                </div>
+                <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                    <div class="form-group">
+                        <label>Город</label>
+                        <input type="text" id="gig-city" placeholder="Москва" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Дата</label>
+                        <input type="date" id="gig-date" required>
+                    </div>
+                </div>
+                <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                    <div class="form-group">
+                        <label>Начало работы</label>
+                        <input type="time" id="gig-time-start" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Конец работы</label>
+                        <input type="time" id="gig-time-end" required>
+                    </div>
+                </div>
+                <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start;">
+                    <div class="form-group">
+                        <label>Тип оплаты</label>
+                        <div class="button-group" id="gig-pay-type-group">
+                            <button type="button" class="type-btn active" data-value="day">За день</button>
+                            <button type="button" class="type-btn" data-value="hour">В час</button>
+                        </div>
+                        <input type="hidden" id="gig-pay-type" value="day">
+                    </div>
+                    <div class="form-group">
+                        <label>Оплата (₽)</label>
+                        <input type="number" id="gig-pay" placeholder="3000" min="100" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Контактный телефон</label>
+                    <input type="tel" id="gig-phone" placeholder="+7 (___) ___-__-__" required>
+                </div>
+                <div class="form-group">
+                    <label>Описание</label>
+                    <textarea id="gig-description" rows="5" placeholder="Опишите задачу, требования, условия..." required></textarea>
+                </div>
+                <button type="submit" class="register-submit-btn">Опубликовать</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ✏️ EDIT GIG MODAL (НОВОЕ) -->
+    <div id="edit-gig-modal" class="modal">
+        <div class="modal-content" style="max-width:620px; width:95%;">
+            <span class="close-edit-gig">&times;</span>
+            <h2>Редактировать подработку</h2>
+            <form id="edit-gig-form">
+                <div class="form-group">
+                    <label>Название</label>
+                    <input type="text" id="edit-gig-title" placeholder="Например: Грузчик на склад, Промоутер" required>
+                </div>
+                <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                    <div class="form-group">
+                        <label>Город</label>
+                        <input type="text" id="edit-gig-city" placeholder="Москва" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Дата</label>
+                        <input type="date" id="edit-gig-date" required>
+                    </div>
+                </div>
+                <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                    <div class="form-group">
+                        <label>Начало работы</label>
+                        <input type="time" id="edit-gig-time-start" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Конец работы</label>
+                        <input type="time" id="edit-gig-time-end" required>
+                    </div>
+                </div>
+                <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start;">
+                    <div class="form-group">
+                        <label>Тип оплаты</label>
+                        <div class="button-group" id="edit-gig-pay-type-group">
+                            <button type="button" class="type-btn active" data-value="day">За день</button>
+                            <button type="button" class="type-btn" data-value="hour">В час</button>
+                        </div>
+                        <input type="hidden" id="edit-gig-pay-type" value="day">
+                    </div>
+                    <div class="form-group">
+                        <label>Оплата (₽)</label>
+                        <input type="number" id="edit-gig-pay" placeholder="3000" min="100" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Контактный телефон</label>
+                    <input type="tel" id="edit-gig-phone" placeholder="+7 (___) ___-__-__" required>
+                </div>
+                <div class="form-group">
+                    <label>Описание</label>
+                    <textarea id="edit-gig-description" rows="5" placeholder="Опишите задачу, требования, условия..." required></textarea>
+                </div>
+                <button type="submit" class="register-submit-btn" style="background:#e67e00;">
+                    Сохранить изменения
+                </button>
+            </form>
+        </div>
+    </div>
+
     <script src="script.js"></script>
-    
 </body>
 </html>
