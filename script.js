@@ -1119,12 +1119,12 @@ function getFilteredJobs() {
     const minSalary    = parseInt(document.getElementById('salary-slider').value) || 0;
 
     const categoryKeywords = {
-        'Разработка': ['разработ','программ','developer','frontend','backend','fullstack','python','javascript','react','vue','angular','java','swift','kotlin','php','c++','c#','golang','код','devops','qa','тестировщ','инженер по','software'],
-        'Маркетинг':  ['маркетинг','marketing','реклам','seo','sem','контент','бренд','пиар','аналитик','трафик','продвижен','email','crm','growth'],
-        'Дизайн':     ['дизайн','design','figma','photoshop','illustrator','ux','ui','графич','верстк','motion','3d','sketch','арт','визуал','интерфейс'],
-        'Продажи':    ['продаж','sales','менеджер по','аккаунт','b2b','b2c','клиент','тендер','коммерч','торгов','магазин','реализац','оптов','розниц'],
-        'СММ':        ['смм','smm','социальн','instagram','вконтакте','tiktok','telegram','youtube','блог','reels','таргет','комьюнити','контент-менедж','инфлюенс'],
-    };
+    'Разработка': ['разработч','программист','developer','frontend','backend','fullstack','python','javascript','react','vue','angular','java','swift','kotlin','php','golang','devops','тестировщик','software engineer'],
+    'Маркетинг':  ['маркетолог','маркетинг','marketing','таргетолог реклам','seo-','sem-','бренд-менедж','медиапланир','продвижени сайт'],
+    'Дизайн':     ['дизайнер','веб-дизайн','figma','photoshop','illustrator','ux/ui','ui/ux','графический дизайн','верстальщик','motion design','арт-директор'],
+    'Продажи':    ['менеджер по продажам','менеджер продаж','sales manager','b2b продаж','b2c продаж','торговый представ','продавец-консульт','оптовых продаж'],
+    'СММ':        ['смм','smm-','социальных сетях','instagram','вконтакте','tiktok','telegram','reels','комьюнити','контент-менеджер','инфлюенс','поддержк','support','helpdesk','оператор','клиентской поддержк','служба поддержк'],
+};
 
     return jobs.filter(job => {
         const matchText = !searchText ||
@@ -1421,34 +1421,38 @@ function initCategories() {
 }
 
 function updateCategoryCounts() {
-    const categoryKeywords = {
-        'Разработка': [
-            'разработ', 'программ', 'developer', 'frontend', 'backend',
-            'fullstack', 'python', 'javascript', 'react', 'vue', 'angular',
-            'java', 'swift', 'kotlin', 'php', 'c++', 'c#', 'golang',
-            'код', 'devops', 'qa', 'тестировщ', 'инженер по', 'software'
-        ],
-        'Маркетинг': [
-            'маркетинг', 'marketing', 'реклам', 'seo', 'sem', 'контент',
-            'бренд', 'pr ', 'пиар', 'аналитик', 'трафик', 'продвижен',
-            'email', 'crm', 'growth'
-        ],
-        'Дизайн': [
-            'дизайн', 'design', 'figma', 'photoshop', 'illustrator',
-            'ux', 'ui', 'графич', 'верстк', 'motion', '3d', 'sketch',
-            'арт', 'визуал', 'интерфейс'
-        ],
-        'Продажи': [
-            'продаж', 'sales', 'менеджер по', 'аккаунт', 'b2b', 'b2c',
-            'клиент', 'тендер', 'коммерч', 'торгов', 'магазин',
-            'реализац', 'оптов', 'розниц'
-        ],
-        'СММ': [
-            'смм', 'smm', 'социальн', 'instagram', 'вконтакте', 'tiktok',
-            'telegram', 'youtube', 'блог', 'reels', 'таргет',
-            'комьюнити', 'контент-менедж', 'инфлюенс'
-        ]
-    };
+   const categoryKeywords = {
+    'Разработка': [
+        'разработ', 'программ', 'developer', 'frontend', 'backend',
+        'fullstack', 'python', 'javascript', 'react', 'vue', 'angular',
+        'java', 'swift', 'kotlin', 'php', 'c++', 'c#', 'golang',
+        'devops', 'qa', 'тестировщ', 'software', 'инженер-программ',
+        'веб-разработ', 'мобильн'
+    ],
+    'Маркетинг': [
+        'маркетолог', 'маркетинг', 'marketing', 'реклам', 'seo', 'sem',
+        'бренд', 'пиар', 'pr-', 'трафик', 'продвижен',
+        'email-маркет', 'crm', 'growth hacker', 'медиапланир'
+    ],
+    'Дизайн': [
+        'дизайнер', 'дизайн', 'design', 'figma', 'photoshop', 'illustrator',
+        'ux', 'ui', 'графич', 'верстальщ', 'motion', '3d-', 'sketch',
+        'арт-директ', 'визуал', 'интерфейс'
+    ],
+    'Продажи': [
+        'менеджер по продаж', 'менеджер продаж', 'sales manager',
+        'b2b', 'b2c', 'тендер', 'коммерч директ',
+        'торгов представ', 'оптов', 'розниц',
+        'продавец', 'реализац'
+    ],
+    'СММ': [
+        'смм', 'smm', 'социальн сет', 'instagram', 'вконтакте', 'tiktok',
+        'telegram', 'youtube', 'блогер', 'reels', 'таргетолог',
+        'комьюнити', 'контент-менедж', 'инфлюенс',
+        'поддержк', 'клиентской поддержк', 'техническ поддержк',
+        'служба поддержк', 'support', 'helpdesk', 'оператор'
+    ],
+};
 
     Object.entries(categoryKeywords).forEach(([cat, keywords]) => {
         const count = jobs.filter(job => {
