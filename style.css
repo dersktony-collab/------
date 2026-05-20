@@ -1725,39 +1725,38 @@ body.dark .cs-list::-webkit-scrollbar-thumb { background: #243048; }
 .cs-option.selected .cs-check { opacity: 1; }
 
 /* ==================== RESPONSIVE ==================== */
-@media (max-width: 1024px) {
-    .categories-grid { grid-template-columns: repeat(3, 1fr); }
-    .features-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 768px) {
-    .hero .container { grid-template-columns: 1fr; }
-    .hero-right { display: none; }
-    .hero h1 { font-size: 32px; }
-    .search-bar { flex-direction: column; border-radius: var(--radius); overflow: visible; }
-    .search-bar > * { border-radius: var(--radius-sm) !important; }
-    .categories-grid { grid-template-columns: repeat(3, 1fr); }
-    .features-grid { grid-template-columns: repeat(2, 1fr); }
-    .header .container { flex-wrap: wrap; gap: 10px; }
-    .jobs-grid { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 480px) {
-    .categories-grid { grid-template-columns: repeat(2, 1fr); }
-    .features-grid { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 28px; }
-}
 @media (max-width: 600px) {
+    html, body {
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+
+    /* Шапка — двухстрочная */
     .header .container {
         flex-wrap: wrap;
         padding: 10px 16px;
-        gap: 8px;
+        gap: 6px;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 20px;
+        order: 1;
+        flex-shrink: 0;
+    }
+
+    .header-right {
+        order: 2;
+        flex: 1;
+        justify-content: flex-end;
+        gap: 5px;
+        flex-wrap: nowrap;
     }
 
     .nav {
         order: 3;
         width: 100%;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 0;
     }
 
@@ -1766,42 +1765,81 @@ body.dark .cs-list::-webkit-scrollbar-thumb { background: #243048; }
         padding: 6px 10px;
     }
 
-    .nav-link.active::after {
-        display: none;
-    }
+    .nav-link.active::after { display: none; }
 
-    .header-right {
-        order: 2;
-        gap: 6px;
+    /* Кнопки шапки — компактные */
+    .theme-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+        flex-shrink: 0;
     }
 
     .login-btn {
-        padding: 7px 12px;
-        font-size: 13px;
+        padding: 7px 10px;
+        font-size: 12px;
     }
 
     .post-job-btn {
-        padding: 7px 12px;
-        font-size: 13px;
+        padding: 7px 10px;
+        font-size: 0;
+        gap: 0;
+        flex-shrink: 0;
     }
 
     .post-job-btn i {
-        display: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 0;
     }
 
-    .logo {
-        order: 1;
-        font-size: 20px;
+    .applications-btn {
+        padding: 7px 8px;
+        font-size: 11px;
+        white-space: nowrap;
     }
 
+    .logout-btn {
+        padding: 7px 8px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .username {
+        font-size: 12px;
+        max-width: 55px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .user-info {
+        gap: 5px;
+        flex-wrap: nowrap;
+        flex: 1;
+        justify-content: flex-end;
+    }
+
+    /* Hero */
     .hero {
-        padding: 32px 0 40px;
+        padding: 36px 0 44px;
+        overflow: hidden;
+    }
+
+    .hero .container {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-right {
+        display: none !important;
     }
 
     .hero-left h1 {
         font-size: 28px;
     }
 
+    /* Поиск */
     .search-bar {
         flex-direction: column;
         border-radius: var(--radius);
@@ -1827,5 +1865,20 @@ body.dark .cs-list::-webkit-scrollbar-thumb { background: #243048; }
 
     .search-bar-inner {
         padding: 0 16px;
+    }
+
+    /* Категории — 2 колонки */
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* Вакансии */
+    .jobs-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Features */
+    .features-grid {
+        grid-template-columns: 1fr;
     }
 }

@@ -142,7 +142,7 @@ document.addEventListener('click', (e) => {
 
     if (e.target.id === 'my-applications-btn') { showMyApplications(); return; }
 
-    if (e.target.classList.contains('respond-btn')) {
+   if (e.target.classList.contains('respond-btn')) {
         if (!currentUser || currentUser.role !== 'candidate') {
             alert('Откликаться могут только соискатели!');
             if (!currentUser) loginModal.style.display = 'flex';
@@ -153,6 +153,7 @@ document.addEventListener('click', (e) => {
         if (job) {
             document.getElementById('respond-job-title').textContent = job.title;
             document.getElementById('respond-form').dataset.jobId = jobId;
+            if (jobDetailModal) jobDetailModal.style.display = 'none';
             respondModal.style.display = 'flex';
         }
         return;
@@ -856,13 +857,12 @@ if (respondForm) {
                 message,
                 date: new Date().toISOString(),
             });
-            alert('✅ Отклик успешно отправлен!');
             appliedJobIds.add(jobId);
             renderJobs(getFilteredJobs());
             respondModal.style.display = 'none';
-            // Закрываем детальную модалку если открыта
             if (jobDetailModal) jobDetailModal.style.display = 'none';
             e.target.reset();
+            alert('✅ Отклик успешно отправлен!');
         } catch (err) { alert('Ошибка при отправке отклика: ' + err.message); }
     });
 }
